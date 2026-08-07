@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>ĀyurVana · Ayurvedic</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ============================================
+       PRODUCT 1: CSS STYLES (MOBILE-FIRST)
+       ============================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    }
+    :root {
+      --primary: #2E7D32;
+      --secondary: #F5F1E8;
+      --accent: #8BC34A;
+      --dark-green: #1B5E20;
+      --white-card: #ffffff;
+      --herbal-green: #e8f5e9;
+      --shadow: 0 4px 16px rgba(0,20,0,0.06), 0 2px 8px rgba(0,0,0,0.02);
+      --radius: 16px;
+      --transition: all 0.25s ease;
+      --gap: 14px;
+    }
+    body {
+      background: var(--herbal-green);
+      color: #1e2b1e;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+    }
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(232, 245, 233, 0.95);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 12px rgba(46,125,50,0.06);
+      border-bottom: 1px solid rgba(46,125,50,0.08);
+      padding: 0.6rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo-area img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+    /* Brand Logo PNG - replaces the text */
+    .brand-logo {
+      height: 45px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #1e3a1e;
+      padding: 0.2rem 0.3rem;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .nav-links a i {
+      margin-right: 2px;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      border-bottom-color: var(--accent);
+      color: var(--primary);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .nav-actions i {
+      font-size: 1.1rem;
+      color: var(--primary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .nav-actions i:hover { color: var(--accent); transform: scale(1.05); }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.8rem 0.8rem;
+    }
+    section { margin-bottom: 2rem; }
+
+    /* ===== CAROUSEL ===== */
+    .carousel-wrapper {
+      position: relative;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: var(--herbal-green);
+      margin: 0.8rem 0 1.5rem;
+      overflow: hidden;
+      touch-action: none;
+    }
+    .carousel-wrap {
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
+      position: relative;
+      background: var(--herbal-green);
+    }
+    .carousel-wrap:active {
+      cursor: grabbing;
+    }
+    .carousel-track {
+      display: flex;
+      width: max-content;
+      touch-action: none;
+      will-change: transform;
+      pointer-events: none;
+      gap: var(--gap);
+      padding: 8px var(--gap);
+    }
+    .carousel-track img {
+      width: 200px;
+      height: 130px;
+      object-fit: cover;
+      flex-shrink: 0;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: auto;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 2px solid var(--herbal-green);
+    }
+    .carousel-track img:hover { 
+      transform: scale(1.03);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    @media (min-width: 480px) {
+      .carousel-track img { width: 260px; height: 150px; }
+      .brand-logo { height: 50px; }
+    }
+    @media (min-width: 768px) {
+      .carousel-track img { width: 320px; height: 180px; }
+      .brand-logo { height: 55px; }
+      .logo-area img { height: 50px; }
+    }
+    @media (min-width: 1024px) {
+      .carousel-track img { width: 380px; height: 200px; }
+      .brand-logo { height: 60px; }
+    }
+
+    .about-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      background: white;
+      padding: 1.2rem 1.2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      align-items: center;
+    }
+    .about-text { flex: 1 1 100%; }
+    .about-text h2 { 
+      color: var(--primary); 
+      margin-bottom: 0.5rem; 
+      font-size: 1.4rem; 
+    }
+    .about-text p { 
+      line-height: 1.6; 
+      color: #2a3a2a; 
+      font-size: 0.95rem;
+    }
+    .heritage-image {
+      flex: 1 1 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .heritage-image img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+    .bottom-banner {
+      margin: 1.5rem 0 1rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem 1.2rem;
+      background: linear-gradient(135deg, rgba(30,74,30,0.88), rgba(46,125,50,0.88));
+      background-blend-mode: overlay;
+      gap: 0.8rem;
+    }
+    .bottom-banner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .bottom-banner > * {
+      position: relative;
+      z-index: 1;
+    }
+    .bottom-banner h2 {
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .bottom-banner h2 strong { font-weight: 700; color: var(--accent); }
+    .bottom-banner .btn {
+      background: var(--accent);
+      color: #1a3a1a;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      font-weight: 600;
+      border: none;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .bottom-banner .btn:hover { transform: scale(1.03); background: #9fd65f; }
+
+    /* ---- CATEGORY TABS ---- */
+    .category-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+      background: white;
+      padding: 0.5rem 0.8rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .category-tabs::-webkit-scrollbar {
+      height: 4px;
+    }
+    .category-tabs::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 10px;
+    }
+    .category-tab {
+      padding: 0.4rem 1rem;
+      border: none;
+      background: transparent;
+      color: #5a6a5a;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      border-radius: 30px;
+      transition: var(--transition);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .category-tab:hover {
+      background: var(--secondary);
+      color: var(--primary);
+    }
+    .category-tab.active {
+      background: var(--primary);
+      color: white;
+    }
+    .category-tab i {
+      margin-right: 4px;
+      font-size: 0.8rem;
+    }
+    .category-count {
+      background: var(--secondary);
+      color: var(--primary);
+      font-size: 0.6rem;
+      padding: 1px 6px;
+      border-radius: 20px;
+      margin-left: 4px;
+    }
+    .category-tab.active .category-count {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: white;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      box-shadow: var(--shadow);
+      max-width: 100%;
+      margin-bottom: 1.2rem;
+      border: 1px solid #d9d0bd;
+    }
+    .search-bar i { color: var(--primary); font-size: 1rem; }
+    .search-bar input {
+      border: none;
+      padding: 0.6rem 0.2rem;
+      width: 100%;
+      background: transparent;
+      outline: none;
+      font-size: 0.9rem;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem 0.8rem;
+    }
+    .product-card {
+      background: var(--white-card);
+      border-radius: var(--radius);
+      padding: 0.8rem 0.7rem 1rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      animation: fadeUp 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #f0eadb;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(46,125,50,0.08);
+    }
+    .product-card img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 12px;
+      background: #e7dfcf;
+      transition: transform 0.4s ease;
+    }
+    .product-card img:hover { transform: scale(1.02); }
+    .product-card .category-badge {
+      display: inline-block;
+      background: var(--secondary);
+      color: var(--primary);
+      font-size: 0.55rem;
+      padding: 1px 8px;
+      border-radius: 20px;
+      margin-top: 4px;
+      align-self: flex-start;
+    }
+    .product-card h4 { 
+      margin: 0.5rem 0 0.1rem; 
+      font-weight: 600; 
+      color: #1b3a1b; 
+      font-size: 0.95rem;
+    }
+    .product-card .generic { 
+      font-size: 0.7rem; 
+      color: #5f6f5a; 
+      letter-spacing: 0.2px; 
+    }
+    .product-card .price { 
+      font-weight: 700; 
+      color: var(--primary); 
+      font-size: 1rem; 
+      margin: 0.3rem 0; 
+    }
+    .product-card .ingredients-short {
+      font-size: 0.6rem;
+      color: #5f6f5a;
+      margin: 2px 0;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 20px;
+    }
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.4rem 0 0.5rem;
+    }
+    .qty-control button {
+      background: var(--secondary);
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .qty-control button:hover { background: var(--accent); color: white; }
+    .qty-control span { min-width: 20px; text-align: center; font-weight: 600; font-size: 0.9rem; }
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.2rem;
+    }
+    .btn-primary {
+      background: var(--dark-green);
+      border: none;
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: var(--transition);
+      flex: 1 1 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+    .btn-primary i { font-size: 0.7rem; }
+    .btn-primary:hover { background: #1f4f1f; transform: scale(0.97); }
+    .btn-whatsapp {
+      background: #25D366;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.6rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .btn-whatsapp:hover { background: #1da851; }
+    .cart-section {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.2rem 1rem;
+      box-shadow: var(--shadow);
+      margin-top: 1.2rem;
+    }
+    .cart-item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e3dccc;
+      padding: 0.6rem 0;
+      gap: 0.5rem;
+    }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex: 1 1 140px;
+    }
+    .cart-item-info img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #d9d0bd;
+    }
+    .cart-item-info div { font-size: 0.85rem; }
+    .cart-qty {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .cart-qty button {
+      background: #f0eadb;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .cart-qty button:hover { background: var(--accent); color: white; }
+    .cart-qty span { font-size: 0.85rem; font-weight: 600; min-width: 20px; text-align: center; }
+    .remove-btn {
+      background: transparent;
+      border: none;
+      color: #b33;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .remove-btn:hover { transform: scale(1.15); color: #a00; }
+    .grand-total {
+      text-align: right;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0.8rem 0 0.6rem;
+    }
+    .offer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .offer-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--accent);
+      transition: var(--transition);
+    }
+    .offer-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(46,125,50,0.10);
+    }
+    .offer-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 0.8rem;
+    }
+    .offer-card .offer-badge {
+      background: var(--accent);
+      color: #1a3a1a;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.7rem;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+    .offer-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+    }
+    .offer-card .offer-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--dark-green);
+      margin: 0.5rem 0;
+    }
+    .offer-card .original-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+    .offer-card .offer-desc {
+      color: #4a5a4a;
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+      font-size: 0.9rem;
+    }
+    .offer-card .offer-products {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0;
+    }
+    .offer-card .offer-products span {
+      background: var(--secondary);
+      padding: 0.2rem 0.6rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      color: var(--primary);
+    }
+    .offer-card .btn-primary {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 0.9rem;
+      justify-content: center;
+    }
+
+    /* ===== CALL US POPUP - BLINKING ===== */
+    .inquiry-popup {
+      position: fixed;
+      bottom: 80px;
+      right: 16px;
+      z-index: 999;
+      background: #d32f2f;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 50px;
+      box-shadow: 0 8px 30px rgba(211, 47, 47, 0.4);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      animation: blinkInquiry 1.2s infinite;
+      text-decoration: none;
+      border: none;
+    }
+    .inquiry-popup i {
+      font-size: 1.2rem;
+    }
+    .inquiry-popup:hover {
+      transform: scale(1.05);
+      background: #b71c1c;
+    }
+    @keyframes blinkInquiry {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Inquiry Modal */
+    .inquiry-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .inquiry-modal.show {
+      display: flex;
+    }
+    .inquiry-modal-content {
+      background: white;
+      max-width: 420px;
+      width: 100%;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+      animation: fadeUp 0.3s ease;
+    }
+    .inquiry-modal-content h2 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.4rem;
+    }
+    .inquiry-modal-content p {
+      color: #5a6a5a;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+    }
+    .inquiry-modal-content .form-group {
+      margin-bottom: 1rem;
+    }
+    .inquiry-modal-content .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #2a3a2a;
+      margin-bottom: 0.3rem;
+      font-size: 0.85rem;
+    }
+    .inquiry-modal-content .form-group input,
+    .inquiry-modal-content .form-group textarea,
+    .inquiry-modal-content .form-group select {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid #d9d0bd;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: var(--secondary);
+      transition: var(--transition);
+    }
+    .inquiry-modal-content .form-group input:focus,
+    .inquiry-modal-content .form-group textarea:focus,
+    .inquiry-modal-content .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+    }
+    .inquiry-modal-content .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .inquiry-modal-content .btn-submit {
+      width: 100%;
+      padding: 0.7rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .inquiry-modal-content .btn-submit:hover {
+      background: var(--dark-green);
+      transform: scale(0.98);
+    }
+    .inquiry-modal-content .btn-close-modal {
+      float: right;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #999;
+      transition: var(--transition);
+    }
+    .inquiry-modal-content .btn-close-modal:hover {
+      color: #333;
+    }
+
+    .float-whatsapp {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      background: #25D366;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+      z-index: 999;
+      text-decoration: none;
+      transition: var(--transition);
+      animation: pulse 2s infinite;
+    }
+    .float-whatsapp:hover { transform: scale(1.06); background: #1fad5a; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.35); }
+      70% { box-shadow: 0 0 0 12px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+    .footer {
+      background: #1c321c;
+      color: #d6dcc6;
+      padding: 1.8rem 1rem 1.2rem;
+      border-radius: 24px 24px 0 0;
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    .footer i { color: var(--accent); margin: 0 3px; }
+    .hidden { display: none !important; }
+    .fade-up { animation: fadeUp 0.4s; }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .section-title {
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      border-left: 6px solid var(--accent);
+      padding-left: 0.8rem;
+    }
+    .detail-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .detail-card {
+      background: white;
+      max-width: 100%;
+      width: 100%;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .detail-card .close-detail {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #555;
+      transition: var(--transition);
+      background: none;
+      border: none;
+    }
+    .detail-card .close-detail:hover { color: #000; transform: scale(1.08); }
+    .detail-card img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #f0eadb;
+    }
+    .detail-card .category-badge {
+      display: inline-block;
+      background: var(--secondary);
+      color: var(--primary);
+      font-size: 0.7rem;
+      padding: 2px 12px;
+      border-radius: 20px;
+      margin: 4px 0;
+    }
+    .detail-card h2 { 
+      color: var(--primary); 
+      margin: 0.6rem 0 0.2rem; 
+      font-size: 1.2rem;
+    }
+    .detail-card .price-lg { 
+      font-size: 1.4rem; 
+      font-weight: 700; 
+      color: var(--dark-green); 
+      margin: 0.3rem 0; 
+    }
+    .detail-card .desc { 
+      color: #2a3a2a; 
+      line-height: 1.5; 
+      margin: 0.5rem 0; 
+      font-size: 0.9rem;
+    }
+    .detail-card .ingredients { 
+      background: #f5f1e8; 
+      padding: 0.5rem 1rem; 
+      border-radius: 30px; 
+      display: inline-block; 
+      margin: 0.3rem 0; 
+      font-size: 0.85rem;
+      max-height: 200px;
+      overflow-y: auto;
+      width: 100%;
+    }
+    .detail-card .qty-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0.8rem 0;
+      flex-wrap: wrap;
+    }
+    .detail-card .qty-row button {
+      background: var(--secondary);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+    }
+    .detail-card .qty-row button:hover { background: var(--accent); color: white; }
+    .detail-card .qty-row span { 
+      font-size: 1.2rem; 
+      font-weight: 600; 
+      min-width: 32px; 
+      text-align: center; 
+    }
+    .detail-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+    }
+    .detail-actions .btn-primary, .detail-actions .btn-whatsapp {
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      flex: 1 1 auto;
+    }
+    .btn-pdf {
+      background: #d32f2f;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1 1 auto;
+    }
+    .btn-pdf:hover { background: #b71c1c; transform: scale(0.97); }
+    .btn-pdf:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .back-btn i { margin-right: 0.4rem; }
+    .back-btn:hover { color: var(--accent); }
+
+    /* PDF Screenshot */
+    #pdfScreenshot {
+      position: fixed;
+      left: -9999px;
+      top: 0;
+      width: 800px;
+      background: white;
+      padding: 30px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      z-index: -1;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    #pdfScreenshot img {
+      max-width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid #e0e0e0;
+    }
+    #pdfScreenshot .header {
+      text-align: center;
+      border-bottom: 3px solid #2E7D32;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+    #pdfScreenshot .header h1 {
+      color: #2E7D32;
+      font-size: 28px;
+      margin: 0;
+    }
+    #pdfScreenshot .header p {
+      color: #1B5E20;
+      font-size: 14px;
+      margin: 5px 0 0;
+    }
+    #pdfScreenshot .product-name {
+      color: #2E7D32;
+      font-size: 22px;
+      margin: 10px 0 5px;
+    }
+    #pdfScreenshot .price-box {
+      background: #e8f5e9;
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    #pdfScreenshot .price-box p {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1B5E20;
+      margin: 0;
+    }
+    #pdfScreenshot .section-title {
+      color: #2E7D32;
+      font-size: 16px;
+      margin: 15px 0 5px;
+      font-weight: 600;
+    }
+    #pdfScreenshot .section-content {
+      color: #2a3a2a;
+      line-height: 1.6;
+      margin: 0 0 10px 0;
+    }
+    #pdfScreenshot .footer {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 2px solid #e0e0e0;
+      text-align: center;
+      color: #5f6f5a;
+      font-size: 12px;
+      background: transparent !important;
+      border-radius: 0 !important;
+    }
+    #pdfScreenshot .footer p {
+      margin: 3px 0;
+    }
+
+    @media (min-width: 480px) {
+      .sticky-nav { padding: 0.6rem 1.5rem; }
+      .brand-logo { height: 50px; }
+      .logo-area img { height: 45px; }
+      .nav-links { gap: 1.2rem; font-size: 0.9rem; }
+      .container { padding: 1rem 1.2rem; }
+      .product-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; }
+      .product-card img { height: 130px; }
+      .about-grid { padding: 1.5rem; }
+      .heritage-image img { height: 180px; }
+      .bottom-banner { min-height: 160px; padding: 1.8rem; }
+      .bottom-banner h2 { font-size: 1.5rem; }
+      .offer-grid { grid-template-columns: repeat(2, 1fr); }
+      .offer-card img { height: 170px; }
+      .carousel-track img { width: 260px; height: 150px; }
+      .detail-card { max-width: 480px; }
+      .detail-card img { max-height: 260px; }
+      .category-tab { font-size: 0.85rem; padding: 0.4rem 1.2rem; }
+    }
+
+    @media (min-width: 768px) {
+      .sticky-nav { padding: 0.8rem 2rem; }
+      .brand-logo { height: 55px; }
+      .logo-area img { height: 50px; }
+      .nav-links { gap: 1.8rem; font-size: 1rem; }
+      .nav-links a { font-size: 1rem; }
+      .container { padding: 1.5rem 2rem; }
+      .product-grid { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.5rem; }
+      .product-card img { height: 150px; }
+      .about-grid { 
+        padding: 2rem; 
+        flex-wrap: nowrap; 
+      }
+      .about-text { flex: 2; }
+      .heritage-image { flex: 1; }
+      .heritage-image img { height: 220px; }
+      .bottom-banner { 
+        flex-direction: row; 
+        text-align: left; 
+        min-height: 180px; 
+        padding: 2rem 2.5rem; 
+        justify-content: space-between;
+      }
+      .bottom-banner h2 { font-size: 1.8rem; }
+      .offer-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+      .offer-card img { height: 180px; }
+      .carousel-track img { width: 320px; height: 180px; }
+      .detail-card { max-width: 600px; }
+      .detail-card img { max-height: 300px; }
+      .category-tabs { gap: 0.8rem; padding: 0.6rem 1.2rem; }
+      .category-tab { font-size: 0.9rem; padding: 0.5rem 1.5rem; }
+    }
+
+    @media (min-width: 1024px) {
+      .brand-logo { height: 60px; }
+      .logo-area img { height: 55px; }
+      .carousel-track img { width: 380px; height: 200px; }
+      .product-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
+      .product-card img { height: 170px; }
+      .container { padding: 2rem 2.5rem; }
+      .bottom-banner h2 { font-size: 2.2rem; }
+      .detail-card { max-width: 720px; }
+      .detail-card img { max-height: 340px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- sticky nav -->
+  <nav class="sticky-nav">
+    <div class="logo-area">
+      <!-- Company Logo (icon) -->
+      <img src="logo.png" alt="ĀyurVana logo" id="companyLogo">
+      <!-- Brand Logo PNG - replaces the "ĀyurVana" text -->
+      <img src="brand-logo.png" alt="Brand Logo" class="brand-logo">
+    </div>
+    <div class="nav-links">
+      <a class="active" data-page="home"><i class="fas fa-home"></i> Home</a>
+      <a data-page="products"><i class="fas fa-capsules"></i> Products</a>
+      <a data-page="offers"><i class="fas fa-tags"></i> Offers</a>
+      <a data-page="news"><i class="fas fa-newspaper"></i> News</a>
+      <a data-page="mykart"><i class="fas fa-shopping-cart"></i> MyKart</a>
+    </div>
+    <div class="nav-actions">
+      <i class="fas fa-search" id="searchIcon"></i>
+      <i class="fas fa-user-circle"></i>
+    </div>
+  </nav>
+
+  <div class="container" id="appContainer">
+    <!-- HOME -->
+    <div id="page-home">
+      <!-- ===== CAROUSEL ===== -->
+      <div class="carousel-wrapper">
+        <div class="carousel-wrap" id="carouselWrap">
+          <div class="carousel-track" id="carouselTrack"></div>
+        </div>
+      </div>
+
+      <section>
+        <div class="about-grid">
+          <div class="about-text">
+            <h2><i class="fas fa-spa" style="color: var(--accent);"></i> Pure Ayurveda</h2>
+            <p>ĀyurVana brings you time-honoured herbal formulations rooted in ancient wisdom. Every product is crafted with care, using sustainably sourced ingredients to balance body, mind, and spirit.</p>
+            <p style="margin-top:0.5rem;"><i class="fas fa-seedling" style="color:var(--primary);"></i> 100% natural · no additives · trust since 1989</p>
+          </div>
+          <div class="heritage-image">
+            <img src="heritage.jpg" alt="Heritage wellness">
+          </div>
+        </div>
+      </section>
+      <div class="bottom-banner" id="longBanner">
+        <img src="banner1.jpg" alt="Ayurvedic wellness banner">
+        <h2>🌿 <strong>Ayurvedic</strong> wellness for everyone</h2>
+        <a href="#" class="btn" id="offerBannerBtn"><i class="fas fa-gift"></i> Explore offer</a>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div id="page-products" class="hidden">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="productSearchInput" placeholder="Search products..." oninput="filterProducts()">
+      </div>
+      
+      <div class="category-tabs" id="categoryTabs">
+        <button class="category-tab active" data-category="all" onclick="filterByCategory('all')">
+          <i class="fas fa-th"></i> All <span class="category-count" id="count-all">0</span>
+        </button>
+        <button class="category-tab" data-category="capsules" onclick="filterByCategory('capsules')">
+          <i class="fas fa-capsules"></i> Capsules <span class="category-count" id="count-capsules">0</span>
+        </button>
+        <button class="category-tab" data-category="tablets" onclick="filterByCategory('tablets')">
+          <i class="fas fa-tablets"></i> Tablets <span class="category-count" id="count-tablets">0</span>
+        </button>
+        <button class="category-tab" data-category="syrups" onclick="filterByCategory('syrups')">
+          <i class="fas fa-flask"></i> Syrups <span class="category-count" id="count-syrups">0</span>
+        </button>
+        <button class="category-tab" data-category="ointments" onclick="filterByCategory('ointments')">
+          <i class="fas fa-hand-holding-heart"></i> Ointments <span class="category-count" id="count-ointments">0</span>
+        </button>
+        <button class="category-tab" data-category="oils" onclick="filterByCategory('oils')">
+          <i class="fas fa-oil-can"></i> Oils <span class="category-count" id="count-oils">0</span>
+        </button>
+        <button class="category-tab" data-category="others" onclick="filterByCategory('others')">
+          <i class="fas fa-ellipsis-h"></i> Others <span class="category-count" id="count-others">0</span>
+        </button>
+      </div>
+      
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <!-- OFFERS -->
+    <div id="page-offers" class="hidden">
+      <a class="back-btn" data-page="home"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      <h2 class="section-title"><i class="fas fa-tags" style="color:var(--accent);"></i> Special Offers</h2>
+      <div class="offer-grid" id="offerGrid"></div>
+    </div>
+
+    <!-- NEWS -->
+    <div id="page-news" class="hidden">
+      <h2 class="section-title"><i class="fas fa-bullhorn" style="color:var(--accent);"></i> News & updates</h2>
+      <div style="background:white; padding:1.2rem; border-radius:var(--radius); box-shadow:var(--shadow);">
+        <div style="display:flex; flex-direction:column; gap:0.8rem;">
+          <div style="font-size:0.9rem;"><i class="fas fa-tag" style="color:var(--accent);"></i> <strong>New offer:</strong> 20% off on Triphala Churna this month</div>
+          <div style="font-size:0.9rem;"><i class="fas fa-flask" style="color:var(--accent);"></i> <strong>New product:</strong> Brahmi Brain Tonic – coming soon</div>
+          <div style="font-size:0.9rem;"><i class="fas fa-heartbeat" style="color:var(--accent);"></i> <strong>Health tip:</strong> Drink warm water with Giloy juice for immunity</div>
+          <div style="background:#f0f7ea; padding:0.6rem 1rem; border-radius:40px; font-size:0.85rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">
+            <i class="fas fa-arrow-right" style="color:var(--primary);"></i> 🌱 Auto‑scroll: Ayurveda daily routine – Dinacharya guide available
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MYKART -->
+    <div id="page-mykart" class="hidden">
+      <h2 class="section-title"><i class="fas fa-shopping-bag"></i> MyKart</h2>
+      <div class="cart-section">
+        <div id="cartItemsContainer"></div>
+        <div id="cartSummary" style="margin-top:0.6rem; border-top:2px dashed #d9d0bd; padding-top:0.6rem;">
+          <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.3rem; font-size:0.9rem;">
+            <span>Subtotal: <strong id="cartSubtotal">₹0</strong></span>
+            <span>GST (12%): <strong id="cartGst">₹0</strong></span>
+            <span>Delivery: <strong id="cartDelivery">₹0</strong></span>
+          </div>
+          <div class="grand-total" id="grandTotal">Grand Total: ₹0</div>
+        </div>
+        <button class="btn-primary" id="buyCartWhatsApp" style="width:100%; padding:0.7rem; font-size:0.95rem;"><i class="fab fa-whatsapp"></i> Buy Entire Cart via WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CALL US POPUP ===== -->
+  <button class="inquiry-popup" id="inquiryBtn">
+    <i class="fas fa-phone-alt"></i> Call Us
+  </button>
+
+  <div class="inquiry-modal" id="inquiryModal">
+    <div class="inquiry-modal-content">
+      <button class="btn-close-modal" id="closeInquiryModal">&times;</button>
+      <h2><i class="fas fa-phone-alt" style="color: var(--accent);"></i> Call Us</h2>
+      <p>Fill in your details and we'll call you back shortly.</p>
+      
+      <form id="inquiryForm" onsubmit="submitInquiry(event)">
+        <div class="form-group">
+          <label for="inquiryName">Your Name</label>
+          <input type="text" id="inquiryName" placeholder="Enter your name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="inquiryPhone">Phone Number</label>
+          <input type="tel" id="inquiryPhone" placeholder="Enter your phone number" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="inquiryEmail">Email Address</label>
+          <input type="email" id="inquiryEmail" placeholder="Enter your email">
+        </div>
+        
+        <div class="form-group">
+          <label for="inquiryProduct">Product Interested In</label>
+          <select id="inquiryProduct">
+            <option value="General Inquiry">General Inquiry</option>
+            <option value="Ashwagandha Capsules">Ashwagandha Capsules</option>
+            <option value="Triphala Churna">Triphala Churna</option>
+            <option value="Giloy Juice">Giloy Juice</option>
+            <option value="Aloe Vera Juice">Aloe Vera Juice</option>
+            <option value="Brahmi Tablets">Brahmi Tablets</option>
+            <option value="Tulsi Drops">Tulsi Drops</option>
+            <option value="Kumkumadi Oil">Kumkumadi Oil</option>
+            <option value="Bhringraj Oil">Bhringraj Oil</option>
+            <option value="Chyawanprash">Chyawanprash</option>
+            <option value="Herbal Kajal">Herbal Kajal</option>
+            <option value="Neem Cream">Neem Cream</option>
+            <option value="Mahanarayan Oil">Mahanarayan Oil</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="inquiryMessage">Your Message</label>
+          <textarea id="inquiryMessage" placeholder="Type your message here..."></textarea>
+        </div>
+        
+        <button type="submit" class="btn-submit">
+          <i class="fab fa-whatsapp"></i> Send via WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- floating WhatsApp -->
+  <a href="https://wa.me/917770975666" target="_blank" class="float-whatsapp"><i class="fab fa-whatsapp"></i></a>
+
+  <!-- product detail overlay -->
+  <div id="productDetailOverlay" class="detail-overlay hidden">
+    <div class="detail-card" id="detailCard">
+      <button class="close-detail" id="closeDetail"><i class="fas fa-times"></i></button>
+      <img id="detailImage" src="" alt="product">
+      <span class="category-badge" id="detailCategory"></span>
+      <h2 id="detailName"></h2>
+      <div class="price-lg" id="detailPrice"></div>
+      <div class="ingredients" id="detailIngredients">🌿 Ingredients: Ashwagandha root extract, organic honey</div>
+      <div class="desc" id="detailDesc">A potent adaptogen that supports stress relief, vitality, and overall well-being. Traditionally used in Ayurveda for rejuvenation.</div>
+      <div class="qty-row">
+        <button id="detailMinus">−</button>
+        <span id="detailQty">1</span>
+        <button id="detailPlus">+</button>
+      </div>
+      <div class="detail-actions">
+        <button class="btn-primary" id="detailAddCart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+        <button class="btn-whatsapp" id="detailBuyNow"><i class="fab fa-whatsapp"></i> Buy Now</button>
+        <button class="btn-pdf" id="downloadPdfBtn"><i class="fas fa-file-pdf"></i> Download PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden PDF Screenshot Container -->
+  <div id="pdfScreenshot"></div>
+
+  <footer class="footer">
+    <p><i class="fas fa-leaf"></i> ĀyurVana – heritage wellness since 1989</p>
+    <p style="margin-top:0.4rem; font-size:0.8rem; opacity:0.8;"><i class="fas fa-phone"></i> +91 77709 75666  ·  <i class="fas fa-envelope"></i> ayur@vana.in</p>
+    <p style="margin-top:0.8rem; font-size:0.75rem;">© 2026 · crafted with <i class="fas fa-heart" style="color:#bf6f6f;"></i></p>
+  </footer>
+
+  <script>
+    // Wait for DOM to load
+    document.addEventListener('DOMContentLoaded', function() {
+      
+    // ============================================
+    // PRODUCT DATA
+    // ============================================
+    const products = [
+      { 
+        id: 1, 
+        name: 'Ashwagandha Capsules', 
+        generic: 'Withania somnifera', 
+        price: 250, 
+        img: 'product1.jpg',
+        displayImg: 'display1.jpg',
+        category: 'capsules',
+        desc: 'Supports stress relief, vitality, and rejuvenation. Used for centuries in Ayurveda.',
+        ingredients: 'Ashwagandha root extract, organic honey, ghee, black pepper extract, ginger' 
+      },
+      { 
+        id: 2, 
+        name: 'Triphala Churna', 
+        generic: '3 fruits blend', 
+        price: 180, 
+        img: 'product2.jpg',
+        displayImg: 'display2.jpg',
+        category: 'tablets',
+        desc: 'Gentle detoxification and digestive support. Balances all three doshas.',
+        ingredients: 'Amalaki, Bibhitaki, Haritaki, organic, natural, preservative-free' 
+      },
+      { 
+        id: 3, 
+        name: 'Giloy Juice', 
+        generic: 'Tinospora cordifolia', 
+        price: 220, 
+        img: 'product3.jpg',
+        displayImg: 'display3.jpg',
+        category: 'syrups',
+        desc: 'Immunity booster, fever management, and overall wellness.',
+        ingredients: 'Fresh Giloy stem extract, purified water, turmeric, ginger, tulsi, black pepper' 
+      },
+      { 
+        id: 4, 
+        name: 'Aloe Vera Juice', 
+        generic: 'Aloe barbadensis', 
+        price: 199, 
+        img: 'product4.jpg',
+        displayImg: 'display4.jpg',
+        category: 'syrups',
+        desc: 'Soothes digestion, supports skin health, and detoxifies the body.',
+        ingredients: 'Aloe vera gel, lemon juice, natural preservative, vitamin C, vitamin E' 
+      },
+      { 
+        id: 5, 
+        name: 'Brahmi Tablets', 
+        generic: 'Bacopa monnieri', 
+        price: 280, 
+        img: 'product5.jpg',
+        displayImg: 'display5.jpg',
+        category: 'tablets',
+        desc: 'Enhances memory, concentration, and cognitive function.',
+        ingredients: 'Brahmi extract, organic honey, ghee, black pepper, ginger, turmeric' 
+      },
+      { 
+        id: 6, 
+        name: 'Tulsi Drops', 
+        generic: 'Ocimum sanctum', 
+        price: 150, 
+        img: 'product6.jpg',
+        displayImg: 'display6.jpg',
+        category: 'syrups',
+        desc: 'Natural immunity booster with anti-inflammatory properties.',
+        ingredients: 'Tulsi extract, purified water, natural preservatives, honey, ginger' 
+      },
+      { 
+        id: 7, 
+        name: 'Kumkumadi Oil', 
+        generic: 'Saffron & Sandalwood', 
+        price: 350, 
+        img: 'product7.jpg',
+        displayImg: 'display7.jpg',
+        category: 'oils',
+        desc: 'Ayurvedic facial oil for glowing, radiant skin.',
+        ingredients: 'Kumkumadi extract, sandalwood oil, coconut oil, sesame oil, almond oil, saffron, turmeric, manjishtha' 
+      },
+      { 
+        id: 8, 
+        name: 'Bhringraj Oil', 
+        generic: 'Eclipta alba', 
+        price: 290, 
+        img: 'product8.jpg',
+        displayImg: 'display8.jpg',
+        category: 'oils',
+        desc: 'Promotes hair growth, reduces hair fall, and strengthens roots.',
+        ingredients: 'Bhringraj extract, coconut oil, amla, brahmi, neem, hibiscus, fenugreek, curry leaves' 
+      },
+      { 
+        id: 9, 
+        name: 'Chyawanprash', 
+        generic: 'Amla & 40 Herbs', 
+        price: 320, 
+        img: 'product9.jpg',
+        displayImg: 'display9.jpg',
+        category: 'others',
+        desc: 'Traditional Ayurvedic jam with 40+ herbs for immunity and vitality.',
+        ingredients: 'Amla, Ashwagandha, Shatavari, Brahmi, Guduchi, Tulsi, Ginger, Turmeric, Cinnamon, Cardamom, Nutmeg, Clove, Fennel, Cumin, Coriander, Pippali, Vidanga, Haritaki, Bibhitaki, Vibhitaki, Ghee, Honey, Sesame oil, Indian cherry, Long pepper, Black pepper, Himalayan rock salt, Lotus seeds, Vetiver, Sandalwood, Jatamansi, Khadir, Manjishtha, Neem, Giloy, Punarnava, Kantakari, Vasa, Indravaruni, Bruhati' 
+      },
+      { 
+        id: 10, 
+        name: 'Kajal (Herbal)', 
+        generic: 'Natural Eye Care', 
+        price: 120, 
+        img: 'product10.jpg',
+        displayImg: 'display10.jpg',
+        category: 'others',
+        desc: 'Herbal kajal for healthy eyes and improved vision.',
+        ingredients: 'Camphor, almond oil, ghee, herbs, triphala, rose water, honey, turmeric' 
+      },
+      { 
+        id: 11, 
+        name: 'Neem & Turmeric Cream', 
+        generic: 'Azadirachta indica', 
+        price: 195, 
+        img: 'product11.jpg',
+        displayImg: 'display11.jpg',
+        category: 'ointments',
+        desc: 'Antibacterial cream for acne, blemishes, and skin infections.',
+        ingredients: 'Neem extract, turmeric, aloe vera, coconut oil, beeswax, vitamin E, sandalwood, lavender' 
+      },
+      { 
+        id: 12, 
+        name: 'Mahanarayan Oil', 
+        generic: 'Ayurvedic Massage Oil', 
+        price: 310, 
+        img: 'product12.jpg',
+        displayImg: 'display12.jpg',
+        category: 'oils',
+        desc: 'Traditional massage oil for joint pain and muscle relaxation.',
+        ingredients: 'Bala, ashwagandha, ghee, sesame oil, coconut oil, camphor, eucalyptus, menthol, clove, cinnamon, ginger, black pepper' 
+      }
+    ];
+
+    // ---- OFFER DATA ----
+    const offers = [
+      {
+        id: 1,
+        title: 'Wellness Combo',
+        image: 'offer1.jpg',
+        description: 'Boost your immunity with our powerful herbal duo. Perfect for daily wellness.',
+        products: ['Ashwagandha Capsules', 'Giloy Juice'],
+        originalPrice: 470,
+        offerPrice: 399,
+        badge: 'Save ₹71'
+      },
+      {
+        id: 2,
+        title: 'Digestive Care Pack',
+        image: 'offer2.jpg',
+        description: 'Complete digestive support with Triphala and Aloe Vera. Gentle and effective.',
+        products: ['Triphala Churna', 'Aloe Vera Juice'],
+        originalPrice: 379,
+        offerPrice: 329,
+        badge: 'Save ₹50'
+      },
+      {
+        id: 3,
+        title: 'Ultimate Wellness Kit',
+        image: 'offer3.jpg',
+        description: 'All four essentials for complete Ayurvedic care. Immunity, digestion, and vitality.',
+        products: ['Ashwagandha Capsules', 'Triphala Churna', 'Giloy Juice', 'Aloe Vera Juice'],
+        originalPrice: 849,
+        offerPrice: 699,
+        badge: 'Save ₹150'
+      }
+    ];
+
+    // ---- CATEGORY CONFIG ----
+    const categoryLabels = {
+      'capsules': 'Capsules',
+      'tablets': 'Tablets',
+      'syrups': 'Syrups',
+      'ointments': 'Ointments',
+      'oils': 'Oils',
+      'others': 'Others'
+    };
+
+    let currentCategory = 'all';
+    let currentSearchTerm = '';
+
+    // ---- CART ----
+    let cart = JSON.parse(localStorage.getItem('ayurCart')) || [];
+    function saveCart() { localStorage.setItem('ayurCart', JSON.stringify(cart)); }
+    function getProductById(id) { return products.find(p => p.id === id); }
+
+    // ============================================
+    // CAROUSEL
+    // ============================================
+    let carouselImages = [];
+    let animationFrame = null;
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 0;
+    let diffX = 0;
+    const slideSpeed = 1.5;
+    const gap = 14;
+
+    const trackElement = document.getElementById('carouselTrack');
+    const carouselWrap = document.getElementById('carouselWrap');
+
+    function buildCarousel() {
+      carouselImages = products.map(p => p.displayImg || p.img);
+      
+      const allImages = [...carouselImages, ...carouselImages, ...carouselImages];
+      
+      trackElement.innerHTML = allImages.map((src, index) => {
+        const productId = products[index % products.length].id;
+        return `<img src="${src}" alt="product" data-id="${productId}" draggable="false">`;
+      }).join('');
+
+      trackElement.querySelectorAll('img').forEach((img) => {
+        img.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const productId = parseInt(this.dataset.id);
+          if (productId) {
+            openDetail(productId);
+          }
+        });
+      });
+
+      const slideWidth = getSlideWidth();
+      const centerOffset = (carouselImages.length * slideWidth);
+      trackElement.style.transform = `translateX(-${centerOffset}px)`;
+
+      startAutoSlide();
+
+      carouselWrap.addEventListener('mousedown', startDrag);
+      carouselWrap.addEventListener('mousemove', moveDrag);
+      carouselWrap.addEventListener('mouseup', endDrag);
+      carouselWrap.addEventListener('mouseleave', endDrag);
+
+      carouselWrap.addEventListener('touchstart', startDragTouch);
+      carouselWrap.addEventListener('touchmove', moveDragTouch);
+      carouselWrap.addEventListener('touchend', endDragTouch);
+    }
+
+    function getSlideWidth() {
+      const firstImg = trackElement.querySelector('img');
+      return firstImg ? firstImg.offsetWidth + gap : 200 + gap;
+    }
+
+    function getCurrentTransform() {
+      const transform = trackElement.style.transform;
+      if (!transform) return 0;
+      const match = transform.match(/translateX\(-([\d.]+)px\)/);
+      return match ? parseFloat(match[1]) : 0;
+    }
+
+    function startAutoSlide() {
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+      let lastTime = 0;
+      
+      function animate(time) {
+        if (!lastTime) lastTime = time;
+        const delta = time - lastTime;
+        lastTime = time;
+        
+        if (!isDragging) {
+          const slideWidth = getSlideWidth();
+          const currentOffset = getCurrentTransform();
+          const newOffset = currentOffset + (slideSpeed * (delta / 16));
+          
+          const maxOffset = (carouselImages.length * slideWidth * 2);
+          const minOffset = (carouselImages.length * slideWidth);
+          
+          if (newOffset >= maxOffset) {
+            trackElement.style.transition = 'none';
+            trackElement.style.transform = `translateX(-${minOffset}px)`;
+            setTimeout(() => {
+              trackElement.style.transition = '';
+            }, 50);
+            animationFrame = requestAnimationFrame(animate);
+            return;
+          }
+          
+          trackElement.style.transition = 'none';
+          trackElement.style.transform = `translateX(-${newOffset}px)`;
+        }
+        
+        animationFrame = requestAnimationFrame(animate);
+      }
+      
+      animationFrame = requestAnimationFrame(animate);
+    }
+
+    function startDrag(e) {
+      isDragging = true;
+      startX = e.clientX;
+      diffX = 0;
+      carouselWrap.style.cursor = 'grabbing';
+      trackElement.style.transition = 'none';
+    }
+
+    function moveDrag(e) {
+      if (!isDragging) return;
+      currentX = e.clientX;
+      diffX = currentX - startX;
+      const currentOffset = getCurrentTransform();
+      trackElement.style.transform = `translateX(-${currentOffset - diffX}px)`;
+    }
+
+    function endDrag(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      carouselWrap.style.cursor = 'grab';
+      
+      const slideWidth = getSlideWidth();
+      const currentOffset = getCurrentTransform();
+      const minOffset = carouselImages.length * slideWidth;
+      const relativeOffset = currentOffset - minOffset;
+      let nearestSlide = Math.round(relativeOffset / slideWidth);
+      
+      if (nearestSlide < 0) nearestSlide = 0;
+      if (nearestSlide >= carouselImages.length) nearestSlide = carouselImages.length - 1;
+      
+      let newOffset = minOffset + (nearestSlide * slideWidth);
+      
+      trackElement.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      trackElement.style.transform = `translateX(-${newOffset}px)`;
+      
+      diffX = 0;
+    }
+
+    function startDragTouch(e) {
+      const touch = e.touches[0];
+      isDragging = true;
+      startX = touch.clientX;
+      diffX = 0;
+      trackElement.style.transition = 'none';
+    }
+
+    function moveDragTouch(e) {
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      currentX = touch.clientX;
+      diffX = currentX - startX;
+      const currentOffset = getCurrentTransform();
+      trackElement.style.transform = `translateX(-${currentOffset - diffX}px)`;
+    }
+
+    function endDragTouch(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      const slideWidth = getSlideWidth();
+      const currentOffset = getCurrentTransform();
+      const minOffset = carouselImages.length * slideWidth;
+      const relativeOffset = currentOffset - minOffset;
+      let nearestSlide = Math.round(relativeOffset / slideWidth);
+      
+      if (nearestSlide < 0) nearestSlide = 0;
+      if (nearestSlide >= carouselImages.length) nearestSlide = carouselImages.length - 1;
+      
+      let newOffset = minOffset + (nearestSlide * slideWidth);
+      
+      trackElement.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      trackElement.style.transform = `translateX(-${newOffset}px)`;
+      
+      diffX = 0;
+    }
+
+    // ---- END CAROUSEL ----
+
+    // ---- OFFER GRID ----
+    function renderOffers() {
+      const grid = document.getElementById('offerGrid');
+      if (!grid) return;
+      grid.innerHTML = offers.map(offer => `
+        <div class="offer-card">
+          <img src="${offer.image}" alt="${offer.title}">
+          <span class="offer-badge">${offer.badge}</span>
+          <h3>${offer.title}</h3>
+          <div class="offer-products">
+            ${offer.products.map(p => `<span>${p}</span>`).join('')}
+          </div>
+          <p class="offer-desc">${offer.description}</p>
+          <div class="offer-price">
+            ₹${offer.offerPrice}
+            <span class="original-price">₹${offer.originalPrice}</span>
+          </div>
+          <button class="btn-primary add-offer-to-cart" data-offer='${JSON.stringify(offer)}'>
+            <i class="fas fa-cart-plus"></i> Add Combo to Cart
+          </button>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('.add-offer-to-cart').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const offer = JSON.parse(this.dataset.offer);
+          offer.products.forEach(pName => {
+            const product = products.find(p => p.name === pName);
+            if (product) {
+              const existing = cart.find(item => item.id === product.id);
+              const newQty = (existing ? existing.qty : 0) + 1;
+              updateCart(product.id, newQty);
+            }
+          });
+          renderCart();
+          document.querySelector('.nav-links a[data-page="mykart"]').click();
+        });
+      });
+    }
+
+    // ---- FILTER FUNCTIONS ----
+    window.filterByCategory = function(category) {
+      currentCategory = category;
+      document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.category === category);
+      });
+      renderProducts(currentSearchTerm, currentCategory);
+    };
+
+    window.filterProducts = function() {
+      const searchInput = document.getElementById('productSearchInput');
+      if (!searchInput) return;
+      currentSearchTerm = searchInput.value.trim().toLowerCase();
+      renderProducts(currentSearchTerm, currentCategory);
+    };
+
+    function truncateIngredients(ingredientsStr) {
+      if (!ingredientsStr) return 'Pure Ayurvedic herbs';
+      const items = ingredientsStr.split(',').map(i => i.trim()).filter(i => i.length > 0);
+      if (items.length === 0) return 'Pure Ayurvedic herbs';
+      if (items.length <= 3) return items.join(', ');
+      return items.slice(0, 3).join(', ') + '...';
+    }
+
+    // ---- PRODUCT GRID ----
+    function renderProducts(searchTerm = '', category = 'all') {
+      const grid = document.getElementById('productGrid');
+      if (!grid) return;
+      
+      let filtered = products.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm) || 
+                             p.generic.toLowerCase().includes(searchTerm);
+        const matchesCategory = category === 'all' || p.category === category;
+        return matchesSearch && matchesCategory;
+      });
+
+      updateCategoryCounts();
+
+      if (!filtered.length) {
+        grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:1.5rem; color:#5a6a4a;">🌿 No products found in this category</p>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => {
+        const inCart = cart.find(item => item.id === p.id);
+        const qty = inCart ? inCart.qty : 0;
+        const categoryName = categoryLabels[p.category] || p.category;
+        const shortIngredients = truncateIngredients(p.ingredients);
+        
+        return `
+          <div class="product-card" data-id="${p.id}">
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
+            <span class="category-badge">${categoryName}</span>
+            <h4>${p.name}</h4>
+            <div class="generic">${p.generic}</div>
+            <div class="price">₹${p.price}</div>
+            <div class="ingredients-short">🌿 ${shortIngredients}</div>
+            <div class="qty-control">
+              <button class="qty-minus" data-id="${p.id}">−</button>
+              <span class="qty-display" data-id="${p.id}">${qty}</span>
+              <button class="qty-plus" data-id="${p.id}">+</button>
+            </div>
+            <div class="card-actions">
+              <button class="btn-primary add-to-cart" data-id="${p.id}"><i class="fas fa-cart-plus"></i> Add</button>
+              <button class="btn-whatsapp buy-now-wa" data-id="${p.id}"><i class="fab fa-whatsapp"></i> Buy</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      grid.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+          if (e.target.closest('button') || e.target.closest('.qty-control') || e.target.closest('.category-badge')) return;
+          const id = parseInt(this.dataset.id);
+          openDetail(id);
+        });
+      });
+
+      grid.querySelectorAll('.qty-minus, .qty-plus, .add-to-cart, .buy-now-wa').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const id = parseInt(this.dataset.id);
+          const product = getProductById(id);
+          if (!product) return;
+          const cartItem = cart.find(item => item.id === id);
+          const currentQty = cartItem ? cartItem.qty : 0;
+          if (this.classList.contains('qty-plus')) updateCart(id, currentQty + 1);
+          else if (this.classList.contains('qty-minus')) {
+            if (currentQty > 0) updateCart(id, currentQty - 1);
+          } else if (this.classList.contains('add-to-cart')) {
+            updateCart(id, currentQty + 1);
+          } else if (this.classList.contains('buy-now-wa')) {
+            const qty = currentQty > 0 ? currentQty : 1;
+            const total = product.price * qty;
+            const msg = `Hello,%0AI want to buy%0A%0AProduct: ${product.name}%0AQuantity: ${qty}%0ATotal Price: ₹${total}%0A%0APlease confirm.`;
+            window.open(`https://wa.me/917770975666?text=${msg}`, '_blank');
+          }
+          renderProducts(currentSearchTerm, currentCategory);
+          renderCart();
+        });
+      });
+    }
+
+    function updateCategoryCounts() {
+      const categories = ['all', 'capsules', 'tablets', 'syrups', 'ointments', 'oils', 'others'];
+      categories.forEach(cat => {
+        const count = cat === 'all' ? products.length : products.filter(p => p.category === cat).length;
+        const el = document.getElementById(`count-${cat}`);
+        if (el) el.textContent = count;
+      });
+    }
+
+    // ---- CART FUNCTIONS ----
+    function updateCart(id, newQty) {
+      const product = getProductById(id);
+      if (!product) return;
+      if (newQty <= 0) {
+        cart = cart.filter(item => item.id !== id);
+      } else {
+        const existing = cart.find(item => item.id === id);
+        if (existing) existing.qty = newQty;
+        else cart.push({ id, qty: newQty });
+      }
+      saveCart();
+      renderCart();
+      renderProducts(currentSearchTerm, currentCategory);
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cartItemsContainer');
+      if (!container) return;
+      if (cart.length === 0) {
+        container.innerHTML = `<p style="color:#5a6a4a; font-size:0.95rem;"><i class="fas fa-box-open"></i> Your cart is empty.</p>`;
+        document.getElementById('cartSubtotal').innerText = '₹0';
+        document.getElementById('cartGst').innerText = '₹0';
+        document.getElementById('cartDelivery').innerText = '₹0';
+        document.getElementById('grandTotal').innerText = 'Grand Total: ₹0';
+        return;
+      }
+      let html = '';
+      let subtotal = 0;
+      cart.forEach(item => {
+        const product = getProductById(item.id);
+        if (!product) return;
+        const st = product.price * item.qty;
+        subtotal += st;
+        html += `
+          <div class="cart-item" data-id="${item.id}">
+            <div class="cart-item-info">
+              <img src="${product.img}" alt="${product.name}">
+              <div><strong>${product.name}</strong> <span style="font-size:0.75rem; color:#4f604a;">₹${product.price}</span></div>
+            </div>
+            <div style="display:flex; align-items:center; gap: 0.6rem;">
+              <div class="cart-qty">
+                <button class="cart-qty-minus" data-id="${item.id}">−</button>
+                <span>${item.qty}</span>
+                <button class="cart-qty-plus" data-id="${item.id}">+</button>
+              </div>
+              <span style="font-weight:600; min-width:50px; font-size:0.9rem;">₹${st}</span>
+              <button class="remove-btn" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+
+      const deliveryCharge = subtotal > 0 ? 40 : 0;
+      const gst = subtotal * 0.12;
+      const grand = subtotal + gst + deliveryCharge;
+
+      document.getElementById('cartSubtotal').innerText = `₹${subtotal.toFixed(2)}`;
+      document.getElementById('cartGst').innerText = `₹${gst.toFixed(2)}`;
+      document.getElementById('cartDelivery').innerText = `₹${deliveryCharge.toFixed(2)}`;
+      document.getElementById('grandTotal').innerHTML = `Grand Total: ₹${grand.toFixed(2)}`;
+
+      container.querySelectorAll('.cart-qty-plus, .cart-qty-minus, .remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const id = parseInt(this.dataset.id);
+          const item = cart.find(i => i.id === id);
+          if (!item) return;
+          if (this.classList.contains('cart-qty-plus')) {
+            updateCart(id, item.qty + 1);
+          } else if (this.classList.contains('cart-qty-minus')) {
+            if (item.qty > 1) updateCart(id, item.qty - 1);
+            else updateCart(id, 0);
+          } else if (this.classList.contains('remove-btn')) {
+            updateCart(id, 0);
+          }
+          renderProducts(currentSearchTerm, currentCategory);
+          renderCart();
+        });
+      });
+    }
+
+    // ---- PRODUCT DETAIL OVERLAY ----
+    let detailProductId = null;
+    let detailQty = 1;
+    let currentDetailProduct = null;
+
+    function openDetail(id) {
+      const product = getProductById(id);
+      if (!product) return;
+      currentDetailProduct = product;
+      detailProductId = id;
+      detailQty = 1;
+      document.getElementById('detailImage').src = product.img;
+      document.getElementById('detailCategory').textContent = categoryLabels[product.category] || product.category;
+      document.getElementById('detailName').innerText = product.name;
+      document.getElementById('detailPrice').innerText = `₹${product.price}`;
+      document.getElementById('detailIngredients').innerHTML = `🌿 Ingredients: ${product.ingredients || 'Pure Ayurvedic herbs'}`;
+      document.getElementById('detailDesc').innerText = product.desc || 'A traditional Ayurvedic formulation for holistic wellness.';
+      document.getElementById('detailQty').innerText = detailQty;
+      document.getElementById('productDetailOverlay').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetail() {
+      document.getElementById('productDetailOverlay').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('closeDetail').addEventListener('click', closeDetail);
+    document.getElementById('productDetailOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeDetail();
+    });
+
+    document.getElementById('detailMinus').addEventListener('click', function() {
+      if (detailQty > 1) { detailQty--; document.getElementById('detailQty').innerText = detailQty; }
+    });
+    document.getElementById('detailPlus').addEventListener('click', function() {
+      detailQty++; document.getElementById('detailQty').innerText = detailQty;
+    });
+
+    document.getElementById('detailAddCart').addEventListener('click', function() {
+      if (!detailProductId) return;
+      const product = getProductById(detailProductId);
+      if (!product) return;
+      const existing = cart.find(item => item.id === detailProductId);
+      const newQty = (existing ? existing.qty : 0) + detailQty;
+      updateCart(detailProductId, newQty);
+      renderProducts(currentSearchTerm, currentCategory);
+      renderCart();
+      closeDetail();
+    });
+
+    document.getElementById('detailBuyNow').addEventListener('click', function() {
+      if (!detailProductId) return;
+      const product = getProductById(detailProductId);
+      if (!product) return;
+      const qty = detailQty;
+      const total = product.price * qty;
+      const msg = `Hello,%0AI want to buy%0A%0AProduct: ${product.name}%0AQuantity: ${qty}%0ATotal Price: ₹${total}%0A%0APlease confirm.`;
+      window.open(`https://wa.me/917770975666?text=${msg}`, '_blank');
+      closeDetail();
+    });
+
+    // ---- PDF DOWNLOAD ----
+    document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+      if (!currentDetailProduct) {
+        alert('Please open a product first.');
+        return;
+      }
+
+      const btn = this;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
+      btn.disabled = true;
+
+      const product = currentDetailProduct;
+
+      const screenshotContainer = document.getElementById('pdfScreenshot');
+      screenshotContainer.innerHTML = `
+        <div class="header">
+          <h1>ĀyurVana</h1>
+          <p>Ayurvedic Wellness</p>
+        </div>
+        
+        <div style="text-align: center; margin-bottom: 15px;">
+          <img src="${product.img}" alt="${product.name}" crossorigin="anonymous">
+        </div>
+        
+        <h2 class="product-name">${product.name}</h2>
+        <p style="color: #5f6f5a; font-size: 14px; margin: 0 0 10px;"><strong>Botanical Name:</strong> ${product.generic}</p>
+        <p style="color: #5f6f5a; font-size: 13px; margin: 0 0 10px;"><strong>Category:</strong> ${categoryLabels[product.category] || product.category}</p>
+        
+        <div class="price-box">
+          <p>Price: ₹${product.price}</p>
+        </div>
+        
+        <h3 class="section-title">Description</h3>
+        <p class="section-content">${product.desc}</p>
+        
+        <h3 class="section-title">Ingredients</h3>
+        <p class="section-content">${product.ingredients || 'Pure Ayurvedic herbs'}</p>
+        
+        <h3 class="section-title">Product Details</h3>
+        <p class="section-content">
+          <strong>Product ID:</strong> #${String(product.id).padStart(3, '0')}<br>
+          <strong>Category:</strong> ${categoryLabels[product.category] || product.category}<br>
+          <strong>Form:</strong> ${product.name.includes('Capsules') ? 'Capsules' : product.name.includes('Tablet') ? 'Tablets' : product.name.includes('Oil') ? 'Oil' : product.name.includes('Juice') ? 'Juice' : 'Herbal'}<br>
+          <strong>Origin:</strong> India
+        </p>
+        
+        <div class="footer">
+          <p><strong>ĀyurVana</strong> · Heritage Wellness Since 1989</p>
+          <p>Contact: +91 77709 75666 · ayur@vana.in</p>
+          <p style="color: #999; font-size: 10px;">This document is for informational purposes only.</p>
+        </div>
+      `;
+
+      setTimeout(function() {
+        html2canvas(screenshotContainer, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          backgroundColor: '#ffffff',
+          width: 800,
+          height: screenshotContainer.scrollHeight
+        }).then(function(canvas) {
+          const imgData = canvas.toDataURL('image/jpeg', 0.95);
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+          
+          pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+          pdf.save(product.name.replace(/\s+/g, '_') + '_Details.pdf');
+          
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          screenshotContainer.innerHTML = '';
+        }).catch(function(err) {
+          console.error('PDF Generation Error:', err);
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          screenshotContainer.innerHTML = '';
+          alert('Could not generate PDF. Please try again.');
+        });
+      }, 800);
+    });
+
+    // ---- BUY ENTIRE CART ----
+    document.getElementById('buyCartWhatsApp').addEventListener('click', function() {
+      if (cart.length === 0) { alert('Cart is empty'); return; }
+      let subtotal = 0;
+      let msg = 'Hello,%0AI want to buy%0A';
+      cart.forEach(item => {
+        const p = getProductById(item.id);
+        if (!p) return;
+        const st = p.price * item.qty;
+        subtotal += st;
+        msg += '%0A' + p.name + '  x' + item.qty + '  = ₹' + st;
+      });
+      const delivery = 40;
+      const gst = subtotal * 0.12;
+      const grand = subtotal + gst + delivery;
+      msg += '%0A%0ASubtotal: ₹' + subtotal.toFixed(2) + '%0AGST (12%): ₹' + gst.toFixed(2) + '%0ADelivery: ₹' + delivery.toFixed(2) + '%0AGrand Total: ₹' + grand.toFixed(2) + '%0A%0APlease confirm.';
+      window.open('https://wa.me/917770975666?text=' + msg, '_blank');
+    });
+
+    // ============================================
+    // CALL US POPUP
+    // ============================================
+    const inquiryBtn = document.getElementById('inquiryBtn');
+    const inquiryModal = document.getElementById('inquiryModal');
+    const closeInquiryModal = document.getElementById('closeInquiryModal');
+
+    inquiryBtn.addEventListener('click', function() {
+      inquiryModal.classList.add('show');
+    });
+
+    closeInquiryModal.addEventListener('click', function() {
+      inquiryModal.classList.remove('show');
+    });
+
+    inquiryModal.addEventListener('click', function(e) {
+      if (e.target === this) {
+        inquiryModal.classList.remove('show');
+      }
+    });
+
+    window.submitInquiry = function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('inquiryName').value.trim();
+      const phone = document.getElementById('inquiryPhone').value.trim();
+      const email = document.getElementById('inquiryEmail').value.trim();
+      const product = document.getElementById('inquiryProduct').value;
+      const message = document.getElementById('inquiryMessage').value.trim();
+
+      if (!name || !phone) {
+        alert('Please fill in your name and phone number.');
+        return;
+      }
+
+      let msg = 'Hello,%0A';
+      msg += 'I have a callback request.%0A%0A';
+      msg += 'Name: ' + name + '%0A';
+      msg += 'Phone: ' + phone + '%0A';
+      if (email) msg += 'Email: ' + email + '%0A';
+      msg += 'Product: ' + product + '%0A';
+      if (message) msg += 'Message: ' + message + '%0A%0A';
+      msg += 'Please call me back. Thank you!';
+
+      window.open('https://wa.me/917770975666?text=' + msg, '_blank');
+      
+      inquiryModal.classList.remove('show');
+      document.getElementById('inquiryForm').reset();
+    };
+
+    // ---- NAVIGATION ----
+    const pages = ['home','products','offers','news','mykart'];
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const backBtns = document.querySelectorAll('.back-btn');
+
+    function navigateTo(page) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      pages.forEach(p => {
+        const el = document.getElementById('page-' + p);
+        if (el) el.classList.add('hidden');
+      });
+      const target = document.getElementById('page-' + page);
+      if (target) target.classList.remove('hidden');
+      navLinks.forEach(link => {
+        if (link.dataset.page === page) link.classList.add('active');
+      });
+      if (page === 'products') {
+        renderProducts(currentSearchTerm, currentCategory);
+      }
+      if (page === 'mykart') renderCart();
+      if (page === 'home') {
+        buildCarousel();
+      }
+      if (page === 'offers') renderOffers();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        navigateTo(this.dataset.page);
+      });
+    });
+
+    backBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        navigateTo(this.dataset.page);
+      });
+    });
+
+    document.getElementById('offerBannerBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      navigateTo('offers');
+    });
+
+    document.getElementById('searchIcon').addEventListener('click', function() {
+      navigateTo('products');
+      setTimeout(function() { document.getElementById('productSearchInput').focus(); }, 200);
+    });
+
+    // ---- INIT ----
+    updateCategoryCounts();
+    renderProducts('', 'all');
+    renderCart();
+    renderOffers();
+    buildCarousel();
+    navigateTo('home');
+
+    }); // End of DOMContentLoaded
+  </script>
+</body>
+</html>
