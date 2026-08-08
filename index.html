@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
   <title>ĀyurVana · Ayurvedic</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- jsPDF library for reliable PDF (text-only) -->
+  <!-- jsPDF library for PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     /* ============================================
@@ -1878,7 +1878,7 @@
     });
 
     // ============================================
-    // PDF DOWNLOAD - RELIABLE TEXT-ONLY (FAST)
+    // PDF DOWNLOAD - WITH PRODUCT IMAGE (Base64)
     // ============================================
     document.getElementById('downloadPdfBtn').addEventListener('click', function() {
       if (!currentDetailProduct) {
@@ -1897,7 +1897,7 @@
       const pageWidth = pdf.internal.pageSize.getWidth();
       const margin = 20;
       const maxWidth = pageWidth - (margin * 2);
-      let yPos = 25;
+      let yPos = 20;
 
       function addWrappedText(text, x, y, maxW, lineHeight) {
         const lines = pdf.splitTextToSize(text, maxW);
@@ -1905,98 +1905,218 @@
         return y + (lines.length * lineHeight);
       }
 
-      // Header
-      pdf.setFontSize(24);
-      pdf.setTextColor(46, 125, 50);
-      pdf.text('AyurVana', pageWidth / 2, yPos, { align: 'center' });
-      yPos += 9;
-      
-      pdf.setFontSize(12);
-      pdf.setTextColor(27, 94, 32);
-      pdf.text('Ayurvedic Wellness', pageWidth / 2, yPos, { align: 'center' });
-      yPos += 12;
+      // Load image and convert to base64
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = product.img;
 
-      pdf.setDrawColor(46, 125, 50);
-      pdf.line(margin, yPos, pageWidth - margin, yPos);
-      yPos += 10;
+      img.onload = function() {
+        // Create canvas to convert to base64
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        const imgData = canvas.toDataURL('image/jpeg', 0.8);
 
-      // Product Name
-      pdf.setFontSize(20);
-      pdf.setTextColor(46, 125, 50);
-      pdf.text(product.name, margin, yPos);
-      yPos += 10;
+        // ---- PDF HEADER ----
+        pdf.setFontSize(24);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text('AyurVana', pageWidth / 2, yPos, { align: 'center' });
+        yPos += 9;
+        
+        pdf.setFontSize(12);
+        pdf.setTextColor(27, 94, 32);
+        pdf.text('Ayurvedic Wellness', pageWidth / 2, yPos, { align: 'center' });
+        yPos += 12;
 
-      // Botanical Name
-      pdf.setFontSize(11);
-      pdf.setTextColor(95, 111, 90);
-      pdf.text('Botanical Name: ' + product.generic, margin, yPos);
-      yPos += 9;
+        pdf.setDrawColor(46, 125, 50);
+        pdf.line(margin, yPos, pageWidth - margin, yPos);
+        yPos += 10;
 
-      // Price
-      pdf.setFillColor(232, 245, 233);
-      pdf.rect(margin, yPos - 2, maxWidth, 14, 'F');
-      pdf.setFontSize(18);
-      pdf.setTextColor(27, 94, 32);
-      pdf.text('Price: ₹' + product.price, margin + 4, yPos + 10);
-      yPos += 20;
+        // ---- PRODUCT IMAGE ----
+        const imgWidth = 80;
+        const imgHeight = (img.height * imgWidth) / img.width;
+        const imgX = (pageWidth - imgWidth) / 2;
+        pdf.addImage(imgData, 'JPEG', imgX, yPos, imgWidth, imgHeight);
+        yPos += imgHeight + 10;
 
-      // Description
-      pdf.setFontSize(14);
-      pdf.setTextColor(46, 125, 50);
-      pdf.text('Description', margin, yPos);
-      yPos += 7;
-      pdf.setFontSize(11);
-      pdf.setTextColor(42, 58, 42);
-      yPos = addWrappedText(product.desc, margin, yPos, maxWidth, 6);
-      yPos += 5;
+        // ---- PRODUCT NAME ----
+        pdf.setFontSize(20);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text(product.name, margin, yPos);
+        yPos += 10;
 
-      // Ingredients
-      pdf.setFontSize(14);
-      pdf.setTextColor(46, 125, 50);
-      pdf.text('Ingredients', margin, yPos);
-      yPos += 7;
-      pdf.setFontSize(11);
-      pdf.setTextColor(42, 58, 42);
-      yPos = addWrappedText(product.ingredients, margin, yPos, maxWidth, 6);
-      yPos += 5;
+        // ---- BOTANICAL NAME ----
+        pdf.setFontSize(11);
+        pdf.setTextColor(95, 111, 90);
+        pdf.text('Botanical Name: ' + product.generic, margin, yPos);
+        yPos += 9;
 
-      // Product Details
-      pdf.setFontSize(14);
-      pdf.setTextColor(46, 125, 50);
-      pdf.text('Product Details', margin, yPos);
-      yPos += 7;
-      pdf.setFontSize(10);
-      pdf.setTextColor(42, 58, 42);
-      const details = [
-        'Product ID: #' + String(product.id).padStart(3, '0'),
-        'Category: ' + (categoryLabels[product.category] || product.category),
-        'Form: ' + (product.name.includes('Capsules') ? 'Capsules' : product.name.includes('Tablet') ? 'Tablets' : product.name.includes('Oil') ? 'Oil' : product.name.includes('Juice') ? 'Juice' : 'Herbal'),
-        'Origin: India'
-      ];
-      details.forEach(line => {
-        pdf.text(line, margin, yPos);
+        // ---- PRICE ----
+        pdf.setFillColor(232, 245, 233);
+        pdf.rect(margin, yPos - 2, maxWidth, 14, 'F');
+        pdf.setFontSize(18);
+        pdf.setTextColor(27, 94, 32);
+        pdf.text('Price: ₹' + product.price, margin + 4, yPos + 10);
+        yPos += 20;
+
+        // ---- DESCRIPTION ----
+        pdf.setFontSize(14);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text('Description', margin, yPos);
+        yPos += 7;
+        pdf.setFontSize(11);
+        pdf.setTextColor(42, 58, 42);
+        yPos = addWrappedText(product.desc, margin, yPos, maxWidth, 6);
+        yPos += 5;
+
+        // ---- INGREDIENTS ----
+        pdf.setFontSize(14);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text('Ingredients', margin, yPos);
+        yPos += 7;
+        pdf.setFontSize(11);
+        pdf.setTextColor(42, 58, 42);
+        yPos = addWrappedText(product.ingredients, margin, yPos, maxWidth, 6);
+        yPos += 5;
+
+        // ---- PRODUCT DETAILS ----
+        pdf.setFontSize(14);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text('Product Details', margin, yPos);
+        yPos += 7;
+        pdf.setFontSize(10);
+        pdf.setTextColor(42, 58, 42);
+        const details = [
+          'Product ID: #' + String(product.id).padStart(3, '0'),
+          'Category: ' + (categoryLabels[product.category] || product.category),
+          'Form: ' + (product.name.includes('Capsules') ? 'Capsules' : product.name.includes('Tablet') ? 'Tablets' : product.name.includes('Oil') ? 'Oil' : product.name.includes('Juice') ? 'Juice' : 'Herbal'),
+          'Origin: India'
+        ];
+        details.forEach(line => {
+          pdf.text(line, margin, yPos);
+          yPos += 6;
+        });
+        yPos += 5;
+
+        // ---- FOOTER ----
+        pdf.setDrawColor(200, 200, 200);
+        pdf.line(margin, yPos, pageWidth - margin, yPos);
+        yPos += 9;
+        pdf.setFontSize(10);
+        pdf.setTextColor(95, 111, 90);
+        pdf.text('AyurVana - Heritage Wellness Since 1989', pageWidth / 2, yPos, { align: 'center' });
         yPos += 6;
-      });
-      yPos += 5;
+        pdf.text('Contact: +91 77709 75666  |  ayur@vana.in', pageWidth / 2, yPos, { align: 'center' });
+        yPos += 6;
+        pdf.setFontSize(8);
+        pdf.setTextColor(153, 153, 153);
+        pdf.text('This document is for informational purposes only.', pageWidth / 2, yPos, { align: 'center' });
 
-      // Footer
-      pdf.setDrawColor(200, 200, 200);
-      pdf.line(margin, yPos, pageWidth - margin, yPos);
-      yPos += 9;
-      pdf.setFontSize(10);
-      pdf.setTextColor(95, 111, 90);
-      pdf.text('AyurVana - Heritage Wellness Since 1989', pageWidth / 2, yPos, { align: 'center' });
-      yPos += 6;
-      pdf.text('Contact: +91 77709 75666  |  ayur@vana.in', pageWidth / 2, yPos, { align: 'center' });
-      yPos += 6;
-      pdf.setFontSize(8);
-      pdf.setTextColor(153, 153, 153);
-      pdf.text('This document is for informational purposes only.', pageWidth / 2, yPos, { align: 'center' });
+        pdf.save(product.name.replace(/\s+/g, '_') + '_Details.pdf');
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      };
 
-      pdf.save(product.name.replace(/\s+/g, '_') + '_Details.pdf');
-      
-      btn.innerHTML = originalText;
-      btn.disabled = false;
+      img.onerror = function() {
+        // If image fails to load, generate PDF without image
+        console.warn('Image failed to load, generating PDF without image');
+
+        // ---- PDF HEADER ----
+        pdf.setFontSize(24);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text('AyurVana', pageWidth / 2, yPos, { align: 'center' });
+        yPos += 9;
+        
+        pdf.setFontSize(12);
+        pdf.setTextColor(27, 94, 32);
+        pdf.text('Ayurvedic Wellness', pageWidth / 2, yPos, { align: 'center' });
+        yPos += 12;
+
+        pdf.setDrawColor(46, 125, 50);
+        pdf.line(margin, yPos, pageWidth - margin, yPos);
+        yPos += 10;
+
+        // ---- PRODUCT NAME ----
+        pdf.setFontSize(20);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text(product.name, margin, yPos);
+        yPos += 10;
+
+        // ---- BOTANICAL NAME ----
+        pdf.setFontSize(11);
+        pdf.setTextColor(95, 111, 90);
+        pdf.text('Botanical Name: ' + product.generic, margin, yPos);
+        yPos += 9;
+
+        // ---- PRICE ----
+        pdf.setFillColor(232, 245, 233);
+        pdf.rect(margin, yPos - 2, maxWidth, 14, 'F');
+        pdf.setFontSize(18);
+        pdf.setTextColor(27, 94, 32);
+        pdf.text('Price: ₹' + product.price, margin + 4, yPos + 10);
+        yPos += 20;
+
+        // ---- DESCRIPTION ----
+        pdf.setFontSize(14);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text('Description', margin, yPos);
+        yPos += 7;
+        pdf.setFontSize(11);
+        pdf.setTextColor(42, 58, 42);
+        yPos = addWrappedText(product.desc, margin, yPos, maxWidth, 6);
+        yPos += 5;
+
+        // ---- INGREDIENTS ----
+        pdf.setFontSize(14);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text('Ingredients', margin, yPos);
+        yPos += 7;
+        pdf.setFontSize(11);
+        pdf.setTextColor(42, 58, 42);
+        yPos = addWrappedText(product.ingredients, margin, yPos, maxWidth, 6);
+        yPos += 5;
+
+        // ---- PRODUCT DETAILS ----
+        pdf.setFontSize(14);
+        pdf.setTextColor(46, 125, 50);
+        pdf.text('Product Details', margin, yPos);
+        yPos += 7;
+        pdf.setFontSize(10);
+        pdf.setTextColor(42, 58, 42);
+        const details2 = [
+          'Product ID: #' + String(product.id).padStart(3, '0'),
+          'Category: ' + (categoryLabels[product.category] || product.category),
+          'Form: ' + (product.name.includes('Capsules') ? 'Capsules' : product.name.includes('Tablet') ? 'Tablets' : product.name.includes('Oil') ? 'Oil' : product.name.includes('Juice') ? 'Juice' : 'Herbal'),
+          'Origin: India'
+        ];
+        details2.forEach(line => {
+          pdf.text(line, margin, yPos);
+          yPos += 6;
+        });
+        yPos += 5;
+
+        // ---- FOOTER ----
+        pdf.setDrawColor(200, 200, 200);
+        pdf.line(margin, yPos, pageWidth - margin, yPos);
+        yPos += 9;
+        pdf.setFontSize(10);
+        pdf.setTextColor(95, 111, 90);
+        pdf.text('AyurVana - Heritage Wellness Since 1989', pageWidth / 2, yPos, { align: 'center' });
+        yPos += 6;
+        pdf.text('Contact: +91 77709 75666  |  ayur@vana.in', pageWidth / 2, yPos, { align: 'center' });
+        yPos += 6;
+        pdf.setFontSize(8);
+        pdf.setTextColor(153, 153, 153);
+        pdf.text('This document is for informational purposes only.', pageWidth / 2, yPos, { align: 'center' });
+
+        pdf.save(product.name.replace(/\s+/g, '_') + '_Details.pdf');
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      };
     });
 
     // ---- BUY ENTIRE CART ----
