@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
   <title>ĀyurVana · Ayurvedic</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- jsPDF library for reliable PDF (text-only) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     /* ============================================
        PRODUCT 1: CSS STYLES (MOBILE-FIRST)
@@ -58,7 +60,6 @@
       width: auto;
       object-fit: contain;
     }
-    /* Brand Logo PNG - replaces the text */
     .brand-logo {
       height: 45px;
       width: auto;
@@ -930,84 +931,6 @@
     .back-btn i { margin-right: 0.4rem; }
     .back-btn:hover { color: var(--accent); }
 
-    /* PDF Screenshot */
-    #pdfScreenshot {
-      position: fixed;
-      left: -9999px;
-      top: 0;
-      width: 800px;
-      background: white;
-      padding: 30px;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      z-index: -1;
-      border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    }
-    #pdfScreenshot img {
-      max-width: 100%;
-      max-height: 280px;
-      object-fit: contain;
-      border-radius: 12px;
-      border: 1px solid #e0e0e0;
-    }
-    #pdfScreenshot .header {
-      text-align: center;
-      border-bottom: 3px solid #2E7D32;
-      padding-bottom: 15px;
-      margin-bottom: 20px;
-    }
-    #pdfScreenshot .header h1 {
-      color: #2E7D32;
-      font-size: 28px;
-      margin: 0;
-    }
-    #pdfScreenshot .header p {
-      color: #1B5E20;
-      font-size: 14px;
-      margin: 5px 0 0;
-    }
-    #pdfScreenshot .product-name {
-      color: #2E7D32;
-      font-size: 22px;
-      margin: 10px 0 5px;
-    }
-    #pdfScreenshot .price-box {
-      background: #e8f5e9;
-      padding: 12px 15px;
-      border-radius: 8px;
-      margin: 10px 0;
-    }
-    #pdfScreenshot .price-box p {
-      font-size: 20px;
-      font-weight: 700;
-      color: #1B5E20;
-      margin: 0;
-    }
-    #pdfScreenshot .section-title {
-      color: #2E7D32;
-      font-size: 16px;
-      margin: 15px 0 5px;
-      font-weight: 600;
-    }
-    #pdfScreenshot .section-content {
-      color: #2a3a2a;
-      line-height: 1.6;
-      margin: 0 0 10px 0;
-    }
-    #pdfScreenshot .footer {
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 2px solid #e0e0e0;
-      text-align: center;
-      color: #5f6f5a;
-      font-size: 12px;
-      background: transparent !important;
-      border-radius: 0 !important;
-    }
-    #pdfScreenshot .footer p {
-      margin: 3px 0;
-    }
-
     @media (min-width: 480px) {
       .sticky-nav { padding: 0.6rem 1.5rem; }
       .brand-logo { height: 50px; }
@@ -1078,9 +1001,7 @@
   <!-- sticky nav -->
   <nav class="sticky-nav">
     <div class="logo-area">
-      <!-- Company Logo (icon) -->
       <img src="logo.png" alt="ĀyurVana logo" id="companyLogo">
-      <!-- Brand Logo PNG - replaces the "ĀyurVana" text -->
       <img src="brand-logo.png" alt="Brand Logo" class="brand-logo">
     </div>
     <div class="nav-links">
@@ -1099,7 +1020,6 @@
   <div class="container" id="appContainer">
     <!-- HOME -->
     <div id="page-home">
-      <!-- ===== CAROUSEL ===== -->
       <div class="carousel-wrapper">
         <div class="carousel-wrap" id="carouselWrap">
           <div class="carousel-track" id="carouselTrack"></div>
@@ -1282,9 +1202,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Hidden PDF Screenshot Container -->
-  <div id="pdfScreenshot"></div>
 
   <footer class="footer">
     <p><i class="fas fa-leaf"></i> ĀyurVana – heritage wellness since 1989</p>
@@ -1960,7 +1877,9 @@
       closeDetail();
     });
 
-    // ---- PDF DOWNLOAD ----
+    // ============================================
+    // PDF DOWNLOAD - RELIABLE TEXT-ONLY (FAST)
+    // ============================================
     document.getElementById('downloadPdfBtn').addEventListener('click', function() {
       if (!currentDetailProduct) {
         alert('Please open a product first.');
@@ -1973,77 +1892,111 @@
       btn.disabled = true;
 
       const product = currentDetailProduct;
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const margin = 20;
+      const maxWidth = pageWidth - (margin * 2);
+      let yPos = 25;
 
-      const screenshotContainer = document.getElementById('pdfScreenshot');
-      screenshotContainer.innerHTML = `
-        <div class="header">
-          <h1>ĀyurVana</h1>
-          <p>Ayurvedic Wellness</p>
-        </div>
-        
-        <div style="text-align: center; margin-bottom: 15px;">
-          <img src="${product.img}" alt="${product.name}" crossorigin="anonymous">
-        </div>
-        
-        <h2 class="product-name">${product.name}</h2>
-        <p style="color: #5f6f5a; font-size: 14px; margin: 0 0 10px;"><strong>Botanical Name:</strong> ${product.generic}</p>
-        <p style="color: #5f6f5a; font-size: 13px; margin: 0 0 10px;"><strong>Category:</strong> ${categoryLabels[product.category] || product.category}</p>
-        
-        <div class="price-box">
-          <p>Price: ₹${product.price}</p>
-        </div>
-        
-        <h3 class="section-title">Description</h3>
-        <p class="section-content">${product.desc}</p>
-        
-        <h3 class="section-title">Ingredients</h3>
-        <p class="section-content">${product.ingredients || 'Pure Ayurvedic herbs'}</p>
-        
-        <h3 class="section-title">Product Details</h3>
-        <p class="section-content">
-          <strong>Product ID:</strong> #${String(product.id).padStart(3, '0')}<br>
-          <strong>Category:</strong> ${categoryLabels[product.category] || product.category}<br>
-          <strong>Form:</strong> ${product.name.includes('Capsules') ? 'Capsules' : product.name.includes('Tablet') ? 'Tablets' : product.name.includes('Oil') ? 'Oil' : product.name.includes('Juice') ? 'Juice' : 'Herbal'}<br>
-          <strong>Origin:</strong> India
-        </p>
-        
-        <div class="footer">
-          <p><strong>ĀyurVana</strong> · Heritage Wellness Since 1989</p>
-          <p>Contact: +91 77709 75666 · ayur@vana.in</p>
-          <p style="color: #999; font-size: 10px;">This document is for informational purposes only.</p>
-        </div>
-      `;
+      function addWrappedText(text, x, y, maxW, lineHeight) {
+        const lines = pdf.splitTextToSize(text, maxW);
+        pdf.text(lines, x, y);
+        return y + (lines.length * lineHeight);
+      }
 
-      setTimeout(function() {
-        html2canvas(screenshotContainer, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          logging: false,
-          backgroundColor: '#ffffff',
-          width: 800,
-          height: screenshotContainer.scrollHeight
-        }).then(function(canvas) {
-          const imgData = canvas.toDataURL('image/jpeg', 0.95);
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF('p', 'mm', 'a4');
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-          
-          pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-          pdf.save(product.name.replace(/\s+/g, '_') + '_Details.pdf');
-          
-          btn.innerHTML = originalText;
-          btn.disabled = false;
-          screenshotContainer.innerHTML = '';
-        }).catch(function(err) {
-          console.error('PDF Generation Error:', err);
-          btn.innerHTML = originalText;
-          btn.disabled = false;
-          screenshotContainer.innerHTML = '';
-          alert('Could not generate PDF. Please try again.');
-        });
-      }, 800);
+      // Header
+      pdf.setFontSize(24);
+      pdf.setTextColor(46, 125, 50);
+      pdf.text('AyurVana', pageWidth / 2, yPos, { align: 'center' });
+      yPos += 9;
+      
+      pdf.setFontSize(12);
+      pdf.setTextColor(27, 94, 32);
+      pdf.text('Ayurvedic Wellness', pageWidth / 2, yPos, { align: 'center' });
+      yPos += 12;
+
+      pdf.setDrawColor(46, 125, 50);
+      pdf.line(margin, yPos, pageWidth - margin, yPos);
+      yPos += 10;
+
+      // Product Name
+      pdf.setFontSize(20);
+      pdf.setTextColor(46, 125, 50);
+      pdf.text(product.name, margin, yPos);
+      yPos += 10;
+
+      // Botanical Name
+      pdf.setFontSize(11);
+      pdf.setTextColor(95, 111, 90);
+      pdf.text('Botanical Name: ' + product.generic, margin, yPos);
+      yPos += 9;
+
+      // Price
+      pdf.setFillColor(232, 245, 233);
+      pdf.rect(margin, yPos - 2, maxWidth, 14, 'F');
+      pdf.setFontSize(18);
+      pdf.setTextColor(27, 94, 32);
+      pdf.text('Price: ₹' + product.price, margin + 4, yPos + 10);
+      yPos += 20;
+
+      // Description
+      pdf.setFontSize(14);
+      pdf.setTextColor(46, 125, 50);
+      pdf.text('Description', margin, yPos);
+      yPos += 7;
+      pdf.setFontSize(11);
+      pdf.setTextColor(42, 58, 42);
+      yPos = addWrappedText(product.desc, margin, yPos, maxWidth, 6);
+      yPos += 5;
+
+      // Ingredients
+      pdf.setFontSize(14);
+      pdf.setTextColor(46, 125, 50);
+      pdf.text('Ingredients', margin, yPos);
+      yPos += 7;
+      pdf.setFontSize(11);
+      pdf.setTextColor(42, 58, 42);
+      yPos = addWrappedText(product.ingredients, margin, yPos, maxWidth, 6);
+      yPos += 5;
+
+      // Product Details
+      pdf.setFontSize(14);
+      pdf.setTextColor(46, 125, 50);
+      pdf.text('Product Details', margin, yPos);
+      yPos += 7;
+      pdf.setFontSize(10);
+      pdf.setTextColor(42, 58, 42);
+      const details = [
+        'Product ID: #' + String(product.id).padStart(3, '0'),
+        'Category: ' + (categoryLabels[product.category] || product.category),
+        'Form: ' + (product.name.includes('Capsules') ? 'Capsules' : product.name.includes('Tablet') ? 'Tablets' : product.name.includes('Oil') ? 'Oil' : product.name.includes('Juice') ? 'Juice' : 'Herbal'),
+        'Origin: India'
+      ];
+      details.forEach(line => {
+        pdf.text(line, margin, yPos);
+        yPos += 6;
+      });
+      yPos += 5;
+
+      // Footer
+      pdf.setDrawColor(200, 200, 200);
+      pdf.line(margin, yPos, pageWidth - margin, yPos);
+      yPos += 9;
+      pdf.setFontSize(10);
+      pdf.setTextColor(95, 111, 90);
+      pdf.text('AyurVana - Heritage Wellness Since 1989', pageWidth / 2, yPos, { align: 'center' });
+      yPos += 6;
+      pdf.text('Contact: +91 77709 75666  |  ayur@vana.in', pageWidth / 2, yPos, { align: 'center' });
+      yPos += 6;
+      pdf.setFontSize(8);
+      pdf.setTextColor(153, 153, 153);
+      pdf.text('This document is for informational purposes only.', pageWidth / 2, yPos, { align: 'center' });
+
+      pdf.save(product.name.replace(/\s+/g, '_') + '_Details.pdf');
+      
+      btn.innerHTML = originalText;
+      btn.disabled = false;
     });
 
     // ---- BUY ENTIRE CART ----
