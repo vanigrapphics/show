@@ -612,7 +612,7 @@
     /* ===== INQUIRY POPUP - BLINKING ===== */
     .inquiry-popup {
       position: fixed;
-      bottom: 80px;
+      bottom: 24px;
       right: 16px;
       z-index: 999;
       background: #d32f2f;
@@ -744,31 +744,6 @@
       color: #333;
     }
 
-    .float-whatsapp {
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      background: #25D366;
-      color: white;
-      width: 50px;
-      height: 50px;
-      border-radius: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
-      z-index: 999;
-      text-decoration: none;
-      transition: var(--transition);
-      animation: pulse 2s infinite;
-    }
-    .float-whatsapp:hover { transform: scale(1.06); background: #1fad5a; }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.35); }
-      70% { box-shadow: 0 0 0 12px rgba(37,211,102,0); }
-      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
-    }
     .footer {
       background: #1c321c;
       color: #d6dcc6;
@@ -1195,9 +1170,6 @@
       </form>
     </div>
   </div>
-
-  <!-- floating WhatsApp -->
-  <a href="https://wa.me/919893399560" target="_blank" class="float-whatsapp"><i class="fab fa-whatsapp"></i></a>
 
   <!-- product detail overlay -->
   <div id="productDetailOverlay" class="detail-overlay hidden">
@@ -1735,7 +1707,7 @@
             const qty = currentQty > 0 ? currentQty : 1;
             const total = product.price * qty;
             const msg = `Hello,%0AI want to buy%0A%0AProduct: ${product.name}%0AQuantity: ${qty}%0ATotal Price: ₹${total}%0A%0APlease confirm.`;
-            window.open(`https://wa.me/919893399560?text=${msg}`, '_blank');
+            window.open(`https://wa.me/917770975666?text=${msg}`, '_blank');
           }
           renderProducts(currentSearchTerm, currentCategory);
           renderCart();
@@ -1892,12 +1864,12 @@
       const qty = detailQty;
       const total = product.price * qty;
       const msg = `Hello,%0AI want to buy%0A%0AProduct: ${product.name}%0AQuantity: ${qty}%0ATotal Price: ₹${total}%0A%0APlease confirm.`;
-      window.open(`https://wa.me/919893399560?text=${msg}`, '_blank');
+      window.open(`https://wa.me/917770975666?text=${msg}`, '_blank');
       closeDetail();
     });
 
     // ============================================
-    // PDF DOWNLOAD - WITH BOTH LOGOS (logo.png first, then brand-logo.png)
+    // PDF DOWNLOAD - WITH BOTH LOGOS
     // ============================================
     document.getElementById('downloadPdfBtn').addEventListener('click', function() {
       if (!currentDetailProduct) {
@@ -2147,7 +2119,7 @@
       const gst = subtotal * 0.12;
       const grand = subtotal + gst + delivery;
       msg += '%0A%0ASubtotal: ₹' + subtotal.toFixed(2) + '%0AGST (12%): ₹' + gst.toFixed(2) + '%0ADelivery: ₹' + delivery.toFixed(2) + '%0AGrand Total: ₹' + grand.toFixed(2) + '%0A%0APlease confirm.';
-      window.open('https://wa.me/919893399560?text=' + msg, '_blank');
+      window.open('https://wa.me/917770975666?text=' + msg, '_blank');
     });
 
     // ============================================
@@ -2210,7 +2182,7 @@
       msg += 'Message: ' + message + '%0A%0A';
       msg += 'Please get back to me. Thank you!';
 
-      window.open('https://wa.me/919893399560?text=' + msg, '_blank');
+      window.open('https://wa.me/917770975666?text=' + msg, '_blank');
       
       inquiryModal.classList.remove('show');
       document.getElementById('inquiryForm').reset();
