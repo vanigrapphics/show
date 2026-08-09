@@ -609,7 +609,7 @@
       justify-content: center;
     }
 
-    /* ===== CALL US POPUP - BLINKING ===== */
+    /* ===== INQUIRY POPUP - BLINKING ===== */
     .inquiry-popup {
       position: fixed;
       bottom: 80px;
@@ -661,22 +661,24 @@
     }
     .inquiry-modal-content {
       background: white;
-      max-width: 420px;
+      max-width: 500px;
       width: 100%;
       border-radius: var(--radius);
       padding: 2rem;
       box-shadow: 0 24px 48px rgba(0,0,0,0.2);
       animation: fadeUp 0.3s ease;
+      max-height: 90vh;
+      overflow-y: auto;
     }
     .inquiry-modal-content h2 {
       color: var(--primary);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       font-size: 1.4rem;
     }
-    .inquiry-modal-content p {
+    .inquiry-modal-content .subtitle {
       color: #5a6a5a;
       margin-bottom: 1.2rem;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
     .inquiry-modal-content .form-group {
       margin-bottom: 1rem;
@@ -687,6 +689,9 @@
       color: #2a3a2a;
       margin-bottom: 0.3rem;
       font-size: 0.85rem;
+    }
+    .inquiry-modal-content .form-group label .required {
+      color: #d32f2f;
     }
     .inquiry-modal-content .form-group input,
     .inquiry-modal-content .form-group textarea,
@@ -1121,25 +1126,26 @@
     </div>
   </div>
 
-  <!-- ===== CALL US POPUP ===== -->
+  <!-- ===== INQUIRY POPUP ===== -->
   <button class="inquiry-popup" id="inquiryBtn">
-    <i class="fas fa-phone-alt"></i> Call Us
+    <i class="fas fa-phone-alt"></i> Inquiry
   </button>
 
+  <!-- ===== INQUIRY MODAL ===== -->
   <div class="inquiry-modal" id="inquiryModal">
     <div class="inquiry-modal-content">
       <button class="btn-close-modal" id="closeInquiryModal">&times;</button>
-      <h2><i class="fas fa-phone-alt" style="color: var(--accent);"></i> Call Us</h2>
-      <p>Fill in your details and we'll call you back shortly.</p>
+      <h2><i class="fas fa-question-circle" style="color: var(--accent);"></i> Inquiry</h2>
+      <p class="subtitle">Tell us what you're looking for, and we'll get back to you.</p>
       
       <form id="inquiryForm" onsubmit="submitInquiry(event)">
         <div class="form-group">
-          <label for="inquiryName">Your Name</label>
+          <label for="inquiryName">Your Name <span class="required">*</span></label>
           <input type="text" id="inquiryName" placeholder="Enter your name" required>
         </div>
         
         <div class="form-group">
-          <label for="inquiryPhone">Phone Number</label>
+          <label for="inquiryPhone">Phone Number <span class="required">*</span></label>
           <input type="tel" id="inquiryPhone" placeholder="Enter your phone number" required>
         </div>
         
@@ -1149,6 +1155,17 @@
         </div>
         
         <div class="form-group">
+          <label for="inquiryType">Inquiry Type <span class="required">*</span></label>
+          <select id="inquiryType" required>
+            <option value="">Select an option...</option>
+            <option value="Dealership">Dealership</option>
+            <option value="Product Buying">Product Buying</option>
+            <option value="Consultancy">Consultancy</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group" id="productSelectGroup" style="display:none;">
           <label for="inquiryProduct">Product Interested In</label>
           <select id="inquiryProduct">
             <option value="General Inquiry">General Inquiry</option>
@@ -1168,8 +1185,8 @@
         </div>
         
         <div class="form-group">
-          <label for="inquiryMessage">Your Message</label>
-          <textarea id="inquiryMessage" placeholder="Type your message here..."></textarea>
+          <label for="inquiryMessage">Description <span class="required">*</span></label>
+          <textarea id="inquiryMessage" placeholder="Describe your inquiry in detail..." required></textarea>
         </div>
         
         <button type="submit" class="btn-submit">
@@ -1898,7 +1915,7 @@
       // Load company logo first
       const companyLogo = new Image();
       companyLogo.crossOrigin = 'anonymous';
-      companyLogo.src = 'brand-logo.png'; // Your brand logo PNG
+      companyLogo.src = 'brand-logo.png';
 
       // Load product image
       const productImg = new Image();
@@ -1928,7 +1945,6 @@
       };
 
       companyLogo.onerror = function() {
-        // If logo fails, use text fallback
         logoLoaded = true;
         logoDataUrl = null;
         checkBothLoaded();
@@ -1951,10 +1967,20 @@
         checkBothLoaded();
       };
 
+      // Timeout fallback
+      setTimeout(function() {
+        if (!logoLoaded || !productLoaded) {
+          logoLoaded = true;
+          productLoaded = true;
+          if (!logoDataUrl) logoDataUrl = null;
+          if (!productDataUrl) productDataUrl = null;
+          checkBothLoaded();
+        }
+      }, 5000);
+
       function generatePDF() {
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
 
-        // Create container for PDF
         const container = document.createElement('div');
         container.style.cssText = `
           position: fixed;
@@ -1967,7 +1993,7 @@
           z-index: -1;
         `;
         
-        // Build HTML with company logo
+        // Build HTML with company logo at top
         let headerHTML = '';
         if (logoDataUrl) {
           headerHTML = `
@@ -2035,7 +2061,6 @@
 
         document.body.appendChild(container);
 
-        // Take screenshot
         html2canvas(container, {
           scale: 2,
           useCORS: true,
@@ -2065,17 +2090,6 @@
           alert('Could not generate PDF. Please try again.');
         });
       }
-
-      // If images fail to load within timeout, still generate PDF
-      setTimeout(function() {
-        if (!logoLoaded || !productLoaded) {
-          logoLoaded = true;
-          productLoaded = true;
-          logoDataUrl = null;
-          productDataUrl = null;
-          checkBothLoaded();
-        }
-      }, 5000);
     });
 
     // ---- BUY ENTIRE CART ----
@@ -2098,14 +2112,27 @@
     });
 
     // ============================================
-    // CALL US POPUP
+    // INQUIRY POPUP FUNCTIONALITY
     // ============================================
     const inquiryBtn = document.getElementById('inquiryBtn');
     const inquiryModal = document.getElementById('inquiryModal');
     const closeInquiryModal = document.getElementById('closeInquiryModal');
 
+    // Show/hide product dropdown based on inquiry type
+    document.getElementById('inquiryType').addEventListener('change', function() {
+      const productGroup = document.getElementById('productSelectGroup');
+      if (this.value === 'Product Buying') {
+        productGroup.style.display = 'block';
+      } else {
+        productGroup.style.display = 'none';
+      }
+    });
+
     inquiryBtn.addEventListener('click', function() {
       inquiryModal.classList.add('show');
+      // Reset form
+      document.getElementById('inquiryForm').reset();
+      document.getElementById('productSelectGroup').style.display = 'none';
     });
 
     closeInquiryModal.addEventListener('click', function() {
@@ -2124,27 +2151,33 @@
       const name = document.getElementById('inquiryName').value.trim();
       const phone = document.getElementById('inquiryPhone').value.trim();
       const email = document.getElementById('inquiryEmail').value.trim();
+      const inquiryType = document.getElementById('inquiryType').value;
       const product = document.getElementById('inquiryProduct').value;
       const message = document.getElementById('inquiryMessage').value.trim();
 
-      if (!name || !phone) {
-        alert('Please fill in your name and phone number.');
+      if (!name || !phone || !inquiryType || !message) {
+        alert('Please fill in all required fields.');
         return;
       }
 
+      // Build WhatsApp message
       let msg = 'Hello,%0A';
-      msg += 'I have a callback request.%0A%0A';
+      msg += 'I have an inquiry.%0A%0A';
       msg += 'Name: ' + name + '%0A';
       msg += 'Phone: ' + phone + '%0A';
       if (email) msg += 'Email: ' + email + '%0A';
-      msg += 'Product: ' + product + '%0A';
-      if (message) msg += 'Message: ' + message + '%0A%0A';
-      msg += 'Please call me back. Thank you!';
+      msg += 'Inquiry Type: ' + inquiryType + '%0A';
+      if (inquiryType === 'Product Buying' && product) {
+        msg += 'Product: ' + product + '%0A';
+      }
+      msg += 'Message: ' + message + '%0A%0A';
+      msg += 'Please get back to me. Thank you!';
 
       window.open('https://wa.me/917770975666?text=' + msg, '_blank');
       
       inquiryModal.classList.remove('show');
       document.getElementById('inquiryForm').reset();
+      document.getElementById('productSelectGroup').style.display = 'none';
     };
 
     // ---- NAVIGATION ----
