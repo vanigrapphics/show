@@ -5,10 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
   <title>ĀyurVana · Ayurvedic</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- html2canvas for screenshot -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <!-- jsPDF for PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     /* ============================================
        PRODUCT 1: CSS STYLES (MOBILE-FIRST)
@@ -29,7 +25,6 @@
       --shadow: 0 4px 16px rgba(0,20,0,0.06), 0 2px 8px rgba(0,0,0,0.02);
       --radius: 16px;
       --transition: all 0.25s ease;
-      --gap: 14px;
     }
     body {
       background: var(--herbal-green);
@@ -58,15 +53,18 @@
       gap: 0.5rem;
     }
     .logo-area img {
-      height: 40px;
+      height: 75px;
       width: auto;
       object-fit: contain;
     }
-    .brand-logo {
-      height: 45px;
+    .logo-title {
+      display: flex;
+      align-items: center;
+    }
+    .logo-title img {
+      height: 65px;
       width: auto;
       object-fit: contain;
-      display: block;
     }
     .nav-links {
       display: flex;
@@ -109,71 +107,32 @@
       padding: 0.8rem 0.8rem;
     }
     section { margin-bottom: 2rem; }
-
-    /* ===== CAROUSEL ===== */
-    .carousel-wrapper {
-      position: relative;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      background: var(--herbal-green);
-      margin: 0.8rem 0 1.5rem;
-      overflow: hidden;
-      touch-action: none;
-    }
     .carousel-wrap {
       overflow: hidden;
-      cursor: grab;
-      touch-action: none;
-      position: relative;
-      background: var(--herbal-green);
-    }
-    .carousel-wrap:active {
-      cursor: grabbing;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: white;
+      margin: 0.8rem 0 1.5rem;
+      cursor: pointer;
     }
     .carousel-track {
       display: flex;
+      animation: slideLeft 20s linear infinite;
       width: max-content;
-      touch-action: none;
-      will-change: transform;
-      pointer-events: none;
-      gap: var(--gap);
-      padding: 8px var(--gap);
     }
     .carousel-track img {
       width: 200px;
       height: 130px;
       object-fit: cover;
       flex-shrink: 0;
-      user-select: none;
-      -webkit-user-drag: none;
-      pointer-events: auto;
-      cursor: pointer;
-      position: relative;
-      z-index: 2;
-      border-radius: 12px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      border: 2px solid var(--herbal-green);
+      border-right: 2px solid #eae3d4;
+      transition: transform 0.4s ease;
     }
-    .carousel-track img:hover { 
-      transform: scale(1.03);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    .carousel-track img:hover { transform: scale(1.02); }
+    @keyframes slideLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
-
-    @media (min-width: 480px) {
-      .carousel-track img { width: 260px; height: 150px; }
-      .brand-logo { height: 50px; }
-    }
-    @media (min-width: 768px) {
-      .carousel-track img { width: 320px; height: 180px; }
-      .brand-logo { height: 55px; }
-      .logo-area img { height: 50px; }
-    }
-    @media (min-width: 1024px) {
-      .carousel-track img { width: 380px; height: 200px; }
-      .brand-logo { height: 60px; }
-    }
-
     .about-grid {
       display: flex;
       flex-wrap: wrap;
@@ -259,65 +218,6 @@
       display: inline-block;
     }
     .bottom-banner .btn:hover { transform: scale(1.03); background: #9fd65f; }
-
-    /* ---- CATEGORY TABS ---- */
-    .category-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.2rem;
-      background: white;
-      padding: 0.5rem 0.8rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .category-tabs::-webkit-scrollbar {
-      height: 4px;
-    }
-    .category-tabs::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 10px;
-    }
-    .category-tab {
-      padding: 0.4rem 1rem;
-      border: none;
-      background: transparent;
-      color: #5a6a5a;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-      border-radius: 30px;
-      transition: var(--transition);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .category-tab:hover {
-      background: var(--secondary);
-      color: var(--primary);
-    }
-    .category-tab.active {
-      background: var(--primary);
-      color: white;
-    }
-    .category-tab i {
-      margin-right: 4px;
-      font-size: 0.8rem;
-    }
-    .category-count {
-      background: var(--secondary);
-      color: var(--primary);
-      font-size: 0.6rem;
-      padding: 1px 6px;
-      border-radius: 20px;
-      margin-left: 4px;
-    }
-    .category-tab.active .category-count {
-      background: rgba(255,255,255,0.2);
-      color: white;
-    }
-
     .search-bar {
       display: flex;
       align-items: center;
@@ -369,16 +269,6 @@
       transition: transform 0.4s ease;
     }
     .product-card img:hover { transform: scale(1.02); }
-    .product-card .category-badge {
-      display: inline-block;
-      background: var(--secondary);
-      color: var(--primary);
-      font-size: 0.55rem;
-      padding: 1px 8px;
-      border-radius: 20px;
-      margin-top: 4px;
-      align-self: flex-start;
-    }
     .product-card h4 { 
       margin: 0.5rem 0 0.1rem; 
       font-weight: 600; 
@@ -395,141 +285,6 @@
       color: var(--primary); 
       font-size: 1rem; 
       margin: 0.3rem 0; 
-    }
-    .product-card .ingredients-short {
-      font-size: 0.6rem;
-      color: #5f6f5a;
-      margin: 2px 0;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      min-height: 20px;
-    }
-    .qty-control {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin: 0.4rem 0 0.5rem;
-    }
-    .qty-control button {
-      background: var(--secondary);
-      border: none;
-      width: 26px;
-      height: 26px;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--primary);
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    }
-    .qty-control button:hover { background: var(--accent); color: white; }
-    .qty-control span { min-width: 20px; text-align: center; font-weight: 600; font-size: 0.9rem; }
-    .card-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-      margin-top: 0.2rem;
-    }
-    .btn-primary {
-      background: var(--dark-green);
-      border: none;
-      color: white;
-      padding: 0.3rem 0.6rem;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.7rem;
-      cursor: pointer;
-      transition: var(--transition);
-      flex: 1 1 auto;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-    }
-    .btn-primary i { font-size: 0.7rem; }
-    .btn-primary:hover { background: #1f4f1f; transform: scale(0.97); }
-    .btn-whatsapp {
-      background: #25D366;
-      color: white;
-      border: none;
-      padding: 0.3rem 0.6rem;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.7rem;
-      cursor: pointer;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-    }
-    .btn-whatsapp:hover { background: #1da851; }
-    .cart-section {
-      background: white;
-      border-radius: var(--radius);
-      padding: 1.2rem 1rem;
-      box-shadow: var(--shadow);
-      margin-top: 1.2rem;
-    }
-    .cart-item {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #e3dccc;
-      padding: 0.6rem 0;
-      gap: 0.5rem;
-    }
-    .cart-item:last-child { border-bottom: none; }
-    .cart-item-info {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      flex: 1 1 140px;
-    }
-    .cart-item-info img {
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-      border-radius: 10px;
-      background: #d9d0bd;
-    }
-    .cart-item-info div { font-size: 0.85rem; }
-    .cart-qty {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .cart-qty button {
-      background: #f0eadb;
-      border: none;
-      width: 24px;
-      height: 24px;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .cart-qty button:hover { background: var(--accent); color: white; }
-    .cart-qty span { font-size: 0.85rem; font-weight: 600; min-width: 20px; text-align: center; }
-    .remove-btn {
-      background: transparent;
-      border: none;
-      color: #b33;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .remove-btn:hover { transform: scale(1.15); color: #a00; }
-    .grand-total {
-      text-align: right;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--primary);
-      margin: 0.8rem 0 0.6rem;
     }
     .offer-grid {
       display: grid;
@@ -602,148 +357,6 @@
       font-size: 0.7rem;
       color: var(--primary);
     }
-    .offer-card .btn-primary {
-      width: 100%;
-      padding: 0.6rem;
-      font-size: 0.9rem;
-      justify-content: center;
-    }
-
-    /* ===== INQUIRY POPUP - BLINKING ===== */
-    .inquiry-popup {
-      position: fixed;
-      bottom: 24px;
-      right: 16px;
-      z-index: 999;
-      background: #d32f2f;
-      color: white;
-      padding: 12px 18px;
-      border-radius: 50px;
-      box-shadow: 0 8px 30px rgba(211, 47, 47, 0.4);
-      cursor: pointer;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      animation: blinkInquiry 1.2s infinite;
-      text-decoration: none;
-      border: none;
-    }
-    .inquiry-popup i {
-      font-size: 1.2rem;
-    }
-    .inquiry-popup:hover {
-      transform: scale(1.05);
-      background: #b71c1c;
-    }
-    @keyframes blinkInquiry {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.95); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    /* Inquiry Modal */
-    .inquiry-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(4px);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    .inquiry-modal.show {
-      display: flex;
-    }
-    .inquiry-modal-content {
-      background: white;
-      max-width: 500px;
-      width: 100%;
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: 0 24px 48px rgba(0,0,0,0.2);
-      animation: fadeUp 0.3s ease;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .inquiry-modal-content h2 {
-      color: var(--primary);
-      margin-bottom: 0.3rem;
-      font-size: 1.4rem;
-    }
-    .inquiry-modal-content .subtitle {
-      color: #5a6a5a;
-      margin-bottom: 1.2rem;
-      font-size: 0.9rem;
-    }
-    .inquiry-modal-content .form-group {
-      margin-bottom: 1rem;
-    }
-    .inquiry-modal-content .form-group label {
-      display: block;
-      font-weight: 600;
-      color: #2a3a2a;
-      margin-bottom: 0.3rem;
-      font-size: 0.85rem;
-    }
-    .inquiry-modal-content .form-group label .required {
-      color: #d32f2f;
-    }
-    .inquiry-modal-content .form-group input,
-    .inquiry-modal-content .form-group textarea,
-    .inquiry-modal-content .form-group select {
-      width: 100%;
-      padding: 0.6rem 0.8rem;
-      border: 1px solid #d9d0bd;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      background: var(--secondary);
-      transition: var(--transition);
-    }
-    .inquiry-modal-content .form-group input:focus,
-    .inquiry-modal-content .form-group textarea:focus,
-    .inquiry-modal-content .form-group select:focus {
-      outline: none;
-      border-color: var(--primary);
-      background: white;
-    }
-    .inquiry-modal-content .form-group textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-    .inquiry-modal-content .btn-submit {
-      width: 100%;
-      padding: 0.7rem;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .inquiry-modal-content .btn-submit:hover {
-      background: var(--dark-green);
-      transform: scale(0.98);
-    }
-    .inquiry-modal-content .btn-close-modal {
-      float: right;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #999;
-      transition: var(--transition);
-    }
-    .inquiry-modal-content .btn-close-modal:hover {
-      color: #333;
-    }
-
     .footer {
       background: #1c321c;
       color: #d6dcc6;
@@ -808,15 +421,6 @@
       border-radius: 12px;
       background: #f0eadb;
     }
-    .detail-card .category-badge {
-      display: inline-block;
-      background: var(--secondary);
-      color: var(--primary);
-      font-size: 0.7rem;
-      padding: 2px 12px;
-      border-radius: 20px;
-      margin: 4px 0;
-    }
     .detail-card h2 { 
       color: var(--primary); 
       margin: 0.6rem 0 0.2rem; 
@@ -841,65 +445,6 @@
       display: inline-block; 
       margin: 0.3rem 0; 
       font-size: 0.85rem;
-      max-height: 200px;
-      overflow-y: auto;
-      width: 100%;
-    }
-    .detail-card .qty-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 0.8rem 0;
-      flex-wrap: wrap;
-    }
-    .detail-card .qty-row button {
-      background: var(--secondary);
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 30px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--primary);
-      cursor: pointer;
-    }
-    .detail-card .qty-row button:hover { background: var(--accent); color: white; }
-    .detail-card .qty-row span { 
-      font-size: 1.2rem; 
-      font-weight: 600; 
-      min-width: 32px; 
-      text-align: center; 
-    }
-    .detail-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.6rem;
-    }
-    .detail-actions .btn-primary, .detail-actions .btn-whatsapp {
-      padding: 0.6rem 1.2rem;
-      font-size: 0.9rem;
-      flex: 1 1 auto;
-    }
-    .btn-pdf {
-      background: #d32f2f;
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      flex: 1 1 auto;
-    }
-    .btn-pdf:hover { background: #b71c1c; transform: scale(0.97); }
-    .btn-pdf:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
     }
     .back-btn {
       display: inline-block;
@@ -915,8 +460,8 @@
 
     @media (min-width: 480px) {
       .sticky-nav { padding: 0.6rem 1.5rem; }
-      .brand-logo { height: 50px; }
       .logo-area img { height: 45px; }
+      .logo-title img { height: 50px; }
       .nav-links { gap: 1.2rem; font-size: 0.9rem; }
       .container { padding: 1rem 1.2rem; }
       .product-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; }
@@ -930,13 +475,12 @@
       .carousel-track img { width: 260px; height: 150px; }
       .detail-card { max-width: 480px; }
       .detail-card img { max-height: 260px; }
-      .category-tab { font-size: 0.85rem; padding: 0.4rem 1.2rem; }
     }
 
     @media (min-width: 768px) {
       .sticky-nav { padding: 0.8rem 2rem; }
-      .brand-logo { height: 55px; }
-      .logo-area img { height: 50px; }
+      .logo-area img { height: 55px; }
+      .logo-title img { height: 40px; }
       .nav-links { gap: 1.8rem; font-size: 1rem; }
       .nav-links a { font-size: 1rem; }
       .container { padding: 1.5rem 2rem; }
@@ -962,13 +506,9 @@
       .carousel-track img { width: 320px; height: 180px; }
       .detail-card { max-width: 600px; }
       .detail-card img { max-height: 300px; }
-      .category-tabs { gap: 0.8rem; padding: 0.6rem 1.2rem; }
-      .category-tab { font-size: 0.9rem; padding: 0.5rem 1.5rem; }
     }
 
     @media (min-width: 1024px) {
-      .brand-logo { height: 60px; }
-      .logo-area img { height: 55px; }
       .carousel-track img { width: 380px; height: 200px; }
       .product-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
       .product-card img { height: 170px; }
@@ -984,14 +524,15 @@
   <nav class="sticky-nav">
     <div class="logo-area">
       <img src="logo.png" alt="ĀyurVana logo" id="companyLogo">
-      <img src="brand-logo.png" alt="Brand Logo" class="brand-logo">
+      <div class="logo-title">
+        <img src="brand-logo.png" alt="ĀyurVana" id="brandLogo">
+      </div>
     </div>
     <div class="nav-links">
       <a class="active" data-page="home"><i class="fas fa-home"></i> Home</a>
       <a data-page="products"><i class="fas fa-capsules"></i> Products</a>
       <a data-page="offers"><i class="fas fa-tags"></i> Offers</a>
       <a data-page="news"><i class="fas fa-newspaper"></i> News</a>
-      <a data-page="mykart"><i class="fas fa-shopping-cart"></i> MyKart</a>
     </div>
     <div class="nav-actions">
       <i class="fas fa-search" id="searchIcon"></i>
@@ -1002,12 +543,9 @@
   <div class="container" id="appContainer">
     <!-- HOME -->
     <div id="page-home">
-      <div class="carousel-wrapper">
-        <div class="carousel-wrap" id="carouselWrap">
-          <div class="carousel-track" id="carouselTrack"></div>
-        </div>
+      <div class="carousel-wrap" id="carouselWrapper">
+        <div class="carousel-track" id="carouselTrack"></div>
       </div>
-
       <section>
         <div class="about-grid">
           <div class="about-text">
@@ -1031,33 +569,8 @@
     <div id="page-products" class="hidden">
       <div class="search-bar">
         <i class="fas fa-search"></i>
-        <input type="text" id="productSearchInput" placeholder="Search products..." oninput="filterProducts()">
+        <input type="text" id="productSearchInput" placeholder="Search products...">
       </div>
-      
-      <div class="category-tabs" id="categoryTabs">
-        <button class="category-tab active" data-category="all" onclick="filterByCategory('all')">
-          <i class="fas fa-th"></i> All <span class="category-count" id="count-all">0</span>
-        </button>
-        <button class="category-tab" data-category="capsules" onclick="filterByCategory('capsules')">
-          <i class="fas fa-capsules"></i> Capsules <span class="category-count" id="count-capsules">0</span>
-        </button>
-        <button class="category-tab" data-category="tablets" onclick="filterByCategory('tablets')">
-          <i class="fas fa-tablets"></i> Tablets <span class="category-count" id="count-tablets">0</span>
-        </button>
-        <button class="category-tab" data-category="syrups" onclick="filterByCategory('syrups')">
-          <i class="fas fa-flask"></i> Syrups <span class="category-count" id="count-syrups">0</span>
-        </button>
-        <button class="category-tab" data-category="ointments" onclick="filterByCategory('ointments')">
-          <i class="fas fa-hand-holding-heart"></i> Ointments <span class="category-count" id="count-ointments">0</span>
-        </button>
-        <button class="category-tab" data-category="oils" onclick="filterByCategory('oils')">
-          <i class="fas fa-oil-can"></i> Oils <span class="category-count" id="count-oils">0</span>
-        </button>
-        <button class="category-tab" data-category="others" onclick="filterByCategory('others')">
-          <i class="fas fa-ellipsis-h"></i> Others <span class="category-count" id="count-others">0</span>
-        </button>
-      </div>
-      
       <div class="product-grid" id="productGrid"></div>
     </div>
 
@@ -1082,93 +595,6 @@
         </div>
       </div>
     </div>
-
-    <!-- MYKART -->
-    <div id="page-mykart" class="hidden">
-      <h2 class="section-title"><i class="fas fa-shopping-bag"></i> MyKart</h2>
-      <div class="cart-section">
-        <div id="cartItemsContainer"></div>
-        <div id="cartSummary" style="margin-top:0.6rem; border-top:2px dashed #d9d0bd; padding-top:0.6rem;">
-          <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.3rem; font-size:0.9rem;">
-            <span>Subtotal: <strong id="cartSubtotal">₹0</strong></span>
-            <span>GST (12%): <strong id="cartGst">₹0</strong></span>
-            <span>Delivery: <strong id="cartDelivery">₹0</strong></span>
-          </div>
-          <div class="grand-total" id="grandTotal">Grand Total: ₹0</div>
-        </div>
-        <button class="btn-primary" id="buyCartWhatsApp" style="width:100%; padding:0.7rem; font-size:0.95rem;"><i class="fab fa-whatsapp"></i> Buy Entire Cart via WhatsApp</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== INQUIRY POPUP ===== -->
-  <button class="inquiry-popup" id="inquiryBtn">
-    <i class="fas fa-phone-alt"></i> Inquiry
-  </button>
-
-  <!-- ===== INQUIRY MODAL ===== -->
-  <div class="inquiry-modal" id="inquiryModal">
-    <div class="inquiry-modal-content">
-      <button class="btn-close-modal" id="closeInquiryModal">&times;</button>
-      <h2><i class="fas fa-question-circle" style="color: var(--accent);"></i> Inquiry</h2>
-      <p class="subtitle">Tell us what you're looking for, and we'll get back to you.</p>
-      
-      <form id="inquiryForm" onsubmit="submitInquiry(event)">
-        <div class="form-group">
-          <label for="inquiryName">Your Name <span class="required">*</span></label>
-          <input type="text" id="inquiryName" placeholder="Enter your name" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="inquiryPhone">Phone Number <span class="required">*</span></label>
-          <input type="tel" id="inquiryPhone" placeholder="Enter your phone number" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="inquiryEmail">Email Address</label>
-          <input type="email" id="inquiryEmail" placeholder="Enter your email">
-        </div>
-        
-        <div class="form-group">
-          <label for="inquiryType">Inquiry Type <span class="required">*</span></label>
-          <select id="inquiryType" required>
-            <option value="">Select an option...</option>
-            <option value="Dealership">Dealership</option>
-            <option value="Product Buying">Product Buying</option>
-            <option value="Consultancy">Consultancy</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        
-        <div class="form-group" id="productSelectGroup" style="display:none;">
-          <label for="inquiryProduct">Product Interested In</label>
-          <select id="inquiryProduct">
-            <option value="General Inquiry">General Inquiry</option>
-            <option value="Ashwagandha Capsules">Ashwagandha Capsules</option>
-            <option value="Triphala Churna">Triphala Churna</option>
-            <option value="Giloy Juice">Giloy Juice</option>
-            <option value="Aloe Vera Juice">Aloe Vera Juice</option>
-            <option value="Brahmi Tablets">Brahmi Tablets</option>
-            <option value="Tulsi Drops">Tulsi Drops</option>
-            <option value="Kumkumadi Oil">Kumkumadi Oil</option>
-            <option value="Bhringraj Oil">Bhringraj Oil</option>
-            <option value="Chyawanprash">Chyawanprash</option>
-            <option value="Herbal Kajal">Herbal Kajal</option>
-            <option value="Neem Cream">Neem Cream</option>
-            <option value="Mahanarayan Oil">Mahanarayan Oil</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label for="inquiryMessage">Description <span class="required">*</span></label>
-          <textarea id="inquiryMessage" placeholder="Describe your inquiry in detail..." required></textarea>
-        </div>
-        
-        <button type="submit" class="btn-submit">
-          <i class="fab fa-whatsapp"></i> Send via WhatsApp
-        </button>
-      </form>
-    </div>
   </div>
 
   <!-- product detail overlay -->
@@ -1176,21 +602,10 @@
     <div class="detail-card" id="detailCard">
       <button class="close-detail" id="closeDetail"><i class="fas fa-times"></i></button>
       <img id="detailImage" src="" alt="product">
-      <span class="category-badge" id="detailCategory"></span>
       <h2 id="detailName"></h2>
       <div class="price-lg" id="detailPrice"></div>
       <div class="ingredients" id="detailIngredients">🌿 Ingredients: Ashwagandha root extract, organic honey</div>
       <div class="desc" id="detailDesc">A potent adaptogen that supports stress relief, vitality, and overall well-being. Traditionally used in Ayurveda for rejuvenation.</div>
-      <div class="qty-row">
-        <button id="detailMinus">−</button>
-        <span id="detailQty">1</span>
-        <button id="detailPlus">+</button>
-      </div>
-      <div class="detail-actions">
-        <button class="btn-primary" id="detailAddCart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-        <button class="btn-whatsapp" id="detailBuyNow"><i class="fab fa-whatsapp"></i> Buy Now</button>
-        <button class="btn-pdf" id="downloadPdfBtn"><i class="fas fa-file-pdf"></i> Download PDF</button>
-      </div>
     </div>
   </div>
 
@@ -1201,12 +616,11 @@
   </footer>
 
   <script>
-    // Wait for DOM to load
-    document.addEventListener('DOMContentLoaded', function() {
-      
     // ============================================
-    // PRODUCT DATA
+    // JAVASCRIPT - DATA & LOGIC (Cart & WhatsApp & PDF removed)
     // ============================================
+
+    // ---- PRODUCT DATA ----
     const products = [
       { 
         id: 1, 
@@ -1214,10 +628,8 @@
         generic: 'Withania somnifera', 
         price: 250, 
         img: 'product1.jpg',
-        displayImg: 'display1.jpg',
-        category: 'capsules',
         desc: 'Supports stress relief, vitality, and rejuvenation. Used for centuries in Ayurveda.',
-        ingredients: 'Ashwagandha root extract, organic honey, ghee, black pepper extract, ginger' 
+        ingredients: 'Ashwagandha root extract, organic honey, ghee.' 
       },
       { 
         id: 2, 
@@ -1225,10 +637,8 @@
         generic: '3 fruits blend', 
         price: 180, 
         img: 'product2.jpg',
-        displayImg: 'display2.jpg',
-        category: 'tablets',
         desc: 'Gentle detoxification and digestive support. Balances all three doshas.',
-        ingredients: 'Amalaki, Bibhitaki, Haritaki, organic, natural, preservative-free' 
+        ingredients: 'Amalaki, Bibhitaki, Haritaki – organic.' 
       },
       { 
         id: 3, 
@@ -1236,10 +646,8 @@
         generic: 'Tinospora cordifolia', 
         price: 220, 
         img: 'product3.jpg',
-        displayImg: 'display3.jpg',
-        category: 'syrups',
         desc: 'Immunity booster, fever management, and overall wellness.',
-        ingredients: 'Fresh Giloy stem extract, purified water, turmeric, ginger, tulsi, black pepper' 
+        ingredients: 'Fresh Giloy stem extract, purified water, turmeric.' 
       },
       { 
         id: 4, 
@@ -1247,98 +655,8 @@
         generic: 'Aloe barbadensis', 
         price: 199, 
         img: 'product4.jpg',
-        displayImg: 'display4.jpg',
-        category: 'syrups',
         desc: 'Soothes digestion, supports skin health, and detoxifies the body.',
-        ingredients: 'Aloe vera gel, lemon juice, natural preservative, vitamin C, vitamin E' 
-      },
-      { 
-        id: 5, 
-        name: 'Brahmi Tablets', 
-        generic: 'Bacopa monnieri', 
-        price: 280, 
-        img: 'product5.jpg',
-        displayImg: 'display5.jpg',
-        category: 'tablets',
-        desc: 'Enhances memory, concentration, and cognitive function.',
-        ingredients: 'Brahmi extract, organic honey, ghee, black pepper, ginger, turmeric' 
-      },
-      { 
-        id: 6, 
-        name: 'Tulsi Drops', 
-        generic: 'Ocimum sanctum', 
-        price: 150, 
-        img: 'product6.jpg',
-        displayImg: 'display6.jpg',
-        category: 'syrups',
-        desc: 'Natural immunity booster with anti-inflammatory properties.',
-        ingredients: 'Tulsi extract, purified water, natural preservatives, honey, ginger' 
-      },
-      { 
-        id: 7, 
-        name: 'Kumkumadi Oil', 
-        generic: 'Saffron & Sandalwood', 
-        price: 350, 
-        img: 'product7.jpg',
-        displayImg: 'display7.jpg',
-        category: 'oils',
-        desc: 'Ayurvedic facial oil for glowing, radiant skin.',
-        ingredients: 'Kumkumadi extract, sandalwood oil, coconut oil, sesame oil, almond oil, saffron, turmeric, manjishtha' 
-      },
-      { 
-        id: 8, 
-        name: 'Bhringraj Oil', 
-        generic: 'Eclipta alba', 
-        price: 290, 
-        img: 'product8.jpg',
-        displayImg: 'display8.jpg',
-        category: 'oils',
-        desc: 'Promotes hair growth, reduces hair fall, and strengthens roots.',
-        ingredients: 'Bhringraj extract, coconut oil, amla, brahmi, neem, hibiscus, fenugreek, curry leaves' 
-      },
-      { 
-        id: 9, 
-        name: 'Chyawanprash', 
-        generic: 'Amla & 40 Herbs', 
-        price: 320, 
-        img: 'product9.jpg',
-        displayImg: 'display9.jpg',
-        category: 'others',
-        desc: 'Traditional Ayurvedic jam with 40+ herbs for immunity and vitality.',
-        ingredients: 'Amla, Ashwagandha, Shatavari, Brahmi, Guduchi, Tulsi, Ginger, Turmeric, Cinnamon, Cardamom, Nutmeg, Clove, Fennel, Cumin, Coriander, Pippali, Vidanga, Haritaki, Bibhitaki, Vibhitaki, Ghee, Honey, Sesame oil, Indian cherry, Long pepper, Black pepper, Himalayan rock salt, Lotus seeds, Vetiver, Sandalwood, Jatamansi, Khadir, Manjishtha, Neem, Giloy, Punarnava, Kantakari, Vasa, Indravaruni, Bruhati' 
-      },
-      { 
-        id: 10, 
-        name: 'Kajal (Herbal)', 
-        generic: 'Natural Eye Care', 
-        price: 120, 
-        img: 'product10.jpg',
-        displayImg: 'display10.jpg',
-        category: 'others',
-        desc: 'Herbal kajal for healthy eyes and improved vision.',
-        ingredients: 'Camphor, almond oil, ghee, herbs, triphala, rose water, honey, turmeric' 
-      },
-      { 
-        id: 11, 
-        name: 'Neem & Turmeric Cream', 
-        generic: 'Azadirachta indica', 
-        price: 195, 
-        img: 'product11.jpg',
-        displayImg: 'display11.jpg',
-        category: 'ointments',
-        desc: 'Antibacterial cream for acne, blemishes, and skin infections.',
-        ingredients: 'Neem extract, turmeric, aloe vera, coconut oil, beeswax, vitamin E, sandalwood, lavender' 
-      },
-      { 
-        id: 12, 
-        name: 'Mahanarayan Oil', 
-        generic: 'Ayurvedic Massage Oil', 
-        price: 310, 
-        img: 'product12.jpg',
-        displayImg: 'display12.jpg',
-        category: 'oils',
-        desc: 'Traditional massage oil for joint pain and muscle relaxation.',
-        ingredients: 'Bala, ashwagandha, ghee, sesame oil, coconut oil, camphor, eucalyptus, menthol, clove, cinnamon, ginger, black pepper' 
+        ingredients: 'Aloe vera gel, lemon juice, natural preservative.' 
       }
     ];
 
@@ -1376,206 +694,25 @@
       }
     ];
 
-    // ---- CATEGORY CONFIG ----
-    const categoryLabels = {
-      'capsules': 'Capsules',
-      'tablets': 'Tablets',
-      'syrups': 'Syrups',
-      'ointments': 'Ointments',
-      'oils': 'Oils',
-      'others': 'Others'
-    };
-
-    let currentCategory = 'all';
-    let currentSearchTerm = '';
-
-    // ---- CART ----
-    let cart = JSON.parse(localStorage.getItem('ayurCart')) || [];
-    function saveCart() { localStorage.setItem('ayurCart', JSON.stringify(cart)); }
-    function getProductById(id) { return products.find(p => p.id === id); }
-
-    // ============================================
-    // CAROUSEL
-    // ============================================
-    let carouselImages = [];
-    let animationFrame = null;
-    let isDragging = false;
-    let startX = 0;
-    let currentX = 0;
-    let diffX = 0;
-    const slideSpeed = 1.5;
-    const gap = 14;
-
-    const trackElement = document.getElementById('carouselTrack');
-    const carouselWrap = document.getElementById('carouselWrap');
-
-    function buildCarousel() {
-      carouselImages = products.map(p => p.displayImg || p.img);
-      
-      const allImages = [...carouselImages, ...carouselImages, ...carouselImages];
-      
-      trackElement.innerHTML = allImages.map((src, index) => {
-        const productId = products[index % products.length].id;
-        return `<img src="${src}" alt="product" data-id="${productId}" draggable="false">`;
-      }).join('');
-
-      trackElement.querySelectorAll('img').forEach((img) => {
+    // ---- CAROUSEL ----
+    const track = document.getElementById('carouselTrack');
+    function renderCarousel() {
+      const images = products.map(p => p.img);
+      const all = [...images, ...images];
+      track.innerHTML = all.map(src => `<img src="${src}" alt="product" data-id="${products[0]?.id || 1}">`).join('');
+      track.querySelectorAll('img').forEach((img, idx) => {
         img.addEventListener('click', function(e) {
           e.stopPropagation();
-          const productId = parseInt(this.dataset.id);
-          if (productId) {
-            openDetail(productId);
-          }
+          const prodIdx = idx % products.length;
+          openDetail(products[prodIdx].id);
         });
       });
-
-      const slideWidth = getSlideWidth();
-      const centerOffset = (carouselImages.length * slideWidth);
-      trackElement.style.transform = `translateX(-${centerOffset}px)`;
-
-      startAutoSlide();
-
-      carouselWrap.addEventListener('mousedown', startDrag);
-      carouselWrap.addEventListener('mousemove', moveDrag);
-      carouselWrap.addEventListener('mouseup', endDrag);
-      carouselWrap.addEventListener('mouseleave', endDrag);
-
-      carouselWrap.addEventListener('touchstart', startDragTouch);
-      carouselWrap.addEventListener('touchmove', moveDragTouch);
-      carouselWrap.addEventListener('touchend', endDragTouch);
     }
-
-    function getSlideWidth() {
-      const firstImg = trackElement.querySelector('img');
-      return firstImg ? firstImg.offsetWidth + gap : 200 + gap;
-    }
-
-    function getCurrentTransform() {
-      const transform = trackElement.style.transform;
-      if (!transform) return 0;
-      const match = transform.match(/translateX\(-([\d.]+)px\)/);
-      return match ? parseFloat(match[1]) : 0;
-    }
-
-    function startAutoSlide() {
-      if (animationFrame) cancelAnimationFrame(animationFrame);
-      let lastTime = 0;
-      
-      function animate(time) {
-        if (!lastTime) lastTime = time;
-        const delta = time - lastTime;
-        lastTime = time;
-        
-        if (!isDragging) {
-          const slideWidth = getSlideWidth();
-          const currentOffset = getCurrentTransform();
-          const newOffset = currentOffset + (slideSpeed * (delta / 16));
-          
-          const maxOffset = (carouselImages.length * slideWidth * 2);
-          const minOffset = (carouselImages.length * slideWidth);
-          
-          if (newOffset >= maxOffset) {
-            trackElement.style.transition = 'none';
-            trackElement.style.transform = `translateX(-${minOffset}px)`;
-            setTimeout(() => {
-              trackElement.style.transition = '';
-            }, 50);
-            animationFrame = requestAnimationFrame(animate);
-            return;
-          }
-          
-          trackElement.style.transition = 'none';
-          trackElement.style.transform = `translateX(-${newOffset}px)`;
-        }
-        
-        animationFrame = requestAnimationFrame(animate);
-      }
-      
-      animationFrame = requestAnimationFrame(animate);
-    }
-
-    function startDrag(e) {
-      isDragging = true;
-      startX = e.clientX;
-      diffX = 0;
-      carouselWrap.style.cursor = 'grabbing';
-      trackElement.style.transition = 'none';
-    }
-
-    function moveDrag(e) {
-      if (!isDragging) return;
-      currentX = e.clientX;
-      diffX = currentX - startX;
-      const currentOffset = getCurrentTransform();
-      trackElement.style.transform = `translateX(-${currentOffset - diffX}px)`;
-    }
-
-    function endDrag(e) {
-      if (!isDragging) return;
-      isDragging = false;
-      carouselWrap.style.cursor = 'grab';
-      
-      const slideWidth = getSlideWidth();
-      const currentOffset = getCurrentTransform();
-      const minOffset = carouselImages.length * slideWidth;
-      const relativeOffset = currentOffset - minOffset;
-      let nearestSlide = Math.round(relativeOffset / slideWidth);
-      
-      if (nearestSlide < 0) nearestSlide = 0;
-      if (nearestSlide >= carouselImages.length) nearestSlide = carouselImages.length - 1;
-      
-      let newOffset = minOffset + (nearestSlide * slideWidth);
-      
-      trackElement.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      trackElement.style.transform = `translateX(-${newOffset}px)`;
-      
-      diffX = 0;
-    }
-
-    function startDragTouch(e) {
-      const touch = e.touches[0];
-      isDragging = true;
-      startX = touch.clientX;
-      diffX = 0;
-      trackElement.style.transition = 'none';
-    }
-
-    function moveDragTouch(e) {
-      if (!isDragging) return;
-      const touch = e.touches[0];
-      currentX = touch.clientX;
-      diffX = currentX - startX;
-      const currentOffset = getCurrentTransform();
-      trackElement.style.transform = `translateX(-${currentOffset - diffX}px)`;
-    }
-
-    function endDragTouch(e) {
-      if (!isDragging) return;
-      isDragging = false;
-      
-      const slideWidth = getSlideWidth();
-      const currentOffset = getCurrentTransform();
-      const minOffset = carouselImages.length * slideWidth;
-      const relativeOffset = currentOffset - minOffset;
-      let nearestSlide = Math.round(relativeOffset / slideWidth);
-      
-      if (nearestSlide < 0) nearestSlide = 0;
-      if (nearestSlide >= carouselImages.length) nearestSlide = carouselImages.length - 1;
-      
-      let newOffset = minOffset + (nearestSlide * slideWidth);
-      
-      trackElement.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      trackElement.style.transform = `translateX(-${newOffset}px)`;
-      
-      diffX = 0;
-    }
-
-    // ---- END CAROUSEL ----
+    renderCarousel();
 
     // ---- OFFER GRID ----
     function renderOffers() {
       const grid = document.getElementById('offerGrid');
-      if (!grid) return;
       grid.innerHTML = offers.map(offer => `
         <div class="offer-card">
           <img src="${offer.image}" alt="${offer.title}">
@@ -1589,241 +726,50 @@
             ₹${offer.offerPrice}
             <span class="original-price">₹${offer.originalPrice}</span>
           </div>
-          <button class="btn-primary add-offer-to-cart" data-offer='${JSON.stringify(offer)}'>
-            <i class="fas fa-cart-plus"></i> Add Combo to Cart
-          </button>
         </div>
       `).join('');
-
-      grid.querySelectorAll('.add-offer-to-cart').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const offer = JSON.parse(this.dataset.offer);
-          offer.products.forEach(pName => {
-            const product = products.find(p => p.name === pName);
-            if (product) {
-              const existing = cart.find(item => item.id === product.id);
-              const newQty = (existing ? existing.qty : 0) + 1;
-              updateCart(product.id, newQty);
-            }
-          });
-          renderCart();
-          document.querySelector('.nav-links a[data-page="mykart"]').click();
-        });
-      });
     }
-
-    // ---- FILTER FUNCTIONS ----
-    window.filterByCategory = function(category) {
-      currentCategory = category;
-      document.querySelectorAll('.category-tab').forEach(tab => {
-        tab.classList.toggle('active', tab.dataset.category === category);
-      });
-      renderProducts(currentSearchTerm, currentCategory);
-    };
-
-    window.filterProducts = function() {
-      const searchInput = document.getElementById('productSearchInput');
-      if (!searchInput) return;
-      currentSearchTerm = searchInput.value.trim().toLowerCase();
-      renderProducts(currentSearchTerm, currentCategory);
-    };
-
-    function truncateIngredients(ingredientsStr) {
-      if (!ingredientsStr) return 'Pure Ayurvedic herbs';
-      const items = ingredientsStr.split(',').map(i => i.trim()).filter(i => i.length > 0);
-      if (items.length === 0) return 'Pure Ayurvedic herbs';
-      if (items.length <= 3) return items.join(', ');
-      return items.slice(0, 3).join(', ') + '...';
-    }
+    renderOffers();
 
     // ---- PRODUCT GRID ----
-    function renderProducts(searchTerm = '', category = 'all') {
+    function renderProducts(filter = '') {
       const grid = document.getElementById('productGrid');
-      if (!grid) return;
-      
-      let filtered = products.filter(p => {
-        const matchesSearch = p.name.toLowerCase().includes(searchTerm) || 
-                             p.generic.toLowerCase().includes(searchTerm);
-        const matchesCategory = category === 'all' || p.category === category;
-        return matchesSearch && matchesCategory;
-      });
-
-      updateCategoryCounts();
-
+      const filtered = products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()) || p.generic.toLowerCase().includes(filter.toLowerCase()));
       if (!filtered.length) {
-        grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:1.5rem; color:#5a6a4a;">🌿 No products found in this category</p>`;
+        grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:1.5rem; color:#5a6a4a;">🌿 no products match</p>`;
         return;
       }
-
       grid.innerHTML = filtered.map(p => {
-        const inCart = cart.find(item => item.id === p.id);
-        const qty = inCart ? inCart.qty : 0;
-        const categoryName = categoryLabels[p.category] || p.category;
-        const shortIngredients = truncateIngredients(p.ingredients);
-        
         return `
           <div class="product-card" data-id="${p.id}">
             <img src="${p.img}" alt="${p.name}" loading="lazy">
-            <span class="category-badge">${categoryName}</span>
             <h4>${p.name}</h4>
             <div class="generic">${p.generic}</div>
             <div class="price">₹${p.price}</div>
-            <div class="ingredients-short">🌿 ${shortIngredients}</div>
-            <div class="qty-control">
-              <button class="qty-minus" data-id="${p.id}">−</button>
-              <span class="qty-display" data-id="${p.id}">${qty}</span>
-              <button class="qty-plus" data-id="${p.id}">+</button>
-            </div>
-            <div class="card-actions">
-              <button class="btn-primary add-to-cart" data-id="${p.id}"><i class="fas fa-cart-plus"></i> Add</button>
-              <button class="btn-whatsapp buy-now-wa" data-id="${p.id}"><i class="fab fa-whatsapp"></i> Buy</button>
-            </div>
           </div>
         `;
       }).join('');
 
       grid.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', function(e) {
-          if (e.target.closest('button') || e.target.closest('.qty-control') || e.target.closest('.category-badge')) return;
           const id = parseInt(this.dataset.id);
           openDetail(id);
-        });
-      });
-
-      grid.querySelectorAll('.qty-minus, .qty-plus, .add-to-cart, .buy-now-wa').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const id = parseInt(this.dataset.id);
-          const product = getProductById(id);
-          if (!product) return;
-          const cartItem = cart.find(item => item.id === id);
-          const currentQty = cartItem ? cartItem.qty : 0;
-          if (this.classList.contains('qty-plus')) updateCart(id, currentQty + 1);
-          else if (this.classList.contains('qty-minus')) {
-            if (currentQty > 0) updateCart(id, currentQty - 1);
-          } else if (this.classList.contains('add-to-cart')) {
-            updateCart(id, currentQty + 1);
-          } else if (this.classList.contains('buy-now-wa')) {
-            const qty = currentQty > 0 ? currentQty : 1;
-            const total = product.price * qty;
-            const msg = `Hello,%0AI want to buy%0A%0AProduct: ${product.name}%0AQuantity: ${qty}%0ATotal Price: ₹${total}%0A%0APlease confirm.`;
-            window.open(`https://wa.me/917770975666?text=${msg}`, '_blank');
-          }
-          renderProducts(currentSearchTerm, currentCategory);
-          renderCart();
-        });
-      });
-    }
-
-    function updateCategoryCounts() {
-      const categories = ['all', 'capsules', 'tablets', 'syrups', 'ointments', 'oils', 'others'];
-      categories.forEach(cat => {
-        const count = cat === 'all' ? products.length : products.filter(p => p.category === cat).length;
-        const el = document.getElementById(`count-${cat}`);
-        if (el) el.textContent = count;
-      });
-    }
-
-    // ---- CART FUNCTIONS ----
-    function updateCart(id, newQty) {
-      const product = getProductById(id);
-      if (!product) return;
-      if (newQty <= 0) {
-        cart = cart.filter(item => item.id !== id);
-      } else {
-        const existing = cart.find(item => item.id === id);
-        if (existing) existing.qty = newQty;
-        else cart.push({ id, qty: newQty });
-      }
-      saveCart();
-      renderCart();
-      renderProducts(currentSearchTerm, currentCategory);
-    }
-
-    function renderCart() {
-      const container = document.getElementById('cartItemsContainer');
-      if (!container) return;
-      if (cart.length === 0) {
-        container.innerHTML = `<p style="color:#5a6a4a; font-size:0.95rem;"><i class="fas fa-box-open"></i> Your cart is empty.</p>`;
-        document.getElementById('cartSubtotal').innerText = '₹0';
-        document.getElementById('cartGst').innerText = '₹0';
-        document.getElementById('cartDelivery').innerText = '₹0';
-        document.getElementById('grandTotal').innerText = 'Grand Total: ₹0';
-        return;
-      }
-      let html = '';
-      let subtotal = 0;
-      cart.forEach(item => {
-        const product = getProductById(item.id);
-        if (!product) return;
-        const st = product.price * item.qty;
-        subtotal += st;
-        html += `
-          <div class="cart-item" data-id="${item.id}">
-            <div class="cart-item-info">
-              <img src="${product.img}" alt="${product.name}">
-              <div><strong>${product.name}</strong> <span style="font-size:0.75rem; color:#4f604a;">₹${product.price}</span></div>
-            </div>
-            <div style="display:flex; align-items:center; gap: 0.6rem;">
-              <div class="cart-qty">
-                <button class="cart-qty-minus" data-id="${item.id}">−</button>
-                <span>${item.qty}</span>
-                <button class="cart-qty-plus" data-id="${item.id}">+</button>
-              </div>
-              <span style="font-weight:600; min-width:50px; font-size:0.9rem;">₹${st}</span>
-              <button class="remove-btn" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
-            </div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-
-      const deliveryCharge = subtotal > 0 ? 40 : 0;
-      const gst = subtotal * 0.12;
-      const grand = subtotal + gst + deliveryCharge;
-
-      document.getElementById('cartSubtotal').innerText = `₹${subtotal.toFixed(2)}`;
-      document.getElementById('cartGst').innerText = `₹${gst.toFixed(2)}`;
-      document.getElementById('cartDelivery').innerText = `₹${deliveryCharge.toFixed(2)}`;
-      document.getElementById('grandTotal').innerHTML = `Grand Total: ₹${grand.toFixed(2)}`;
-
-      container.querySelectorAll('.cart-qty-plus, .cart-qty-minus, .remove-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const id = parseInt(this.dataset.id);
-          const item = cart.find(i => i.id === id);
-          if (!item) return;
-          if (this.classList.contains('cart-qty-plus')) {
-            updateCart(id, item.qty + 1);
-          } else if (this.classList.contains('cart-qty-minus')) {
-            if (item.qty > 1) updateCart(id, item.qty - 1);
-            else updateCart(id, 0);
-          } else if (this.classList.contains('remove-btn')) {
-            updateCart(id, 0);
-          }
-          renderProducts(currentSearchTerm, currentCategory);
-          renderCart();
         });
       });
     }
 
     // ---- PRODUCT DETAIL OVERLAY ----
     let detailProductId = null;
-    let detailQty = 1;
-    let currentDetailProduct = null;
 
     function openDetail(id) {
       const product = getProductById(id);
       if (!product) return;
-      currentDetailProduct = product;
       detailProductId = id;
-      detailQty = 1;
       document.getElementById('detailImage').src = product.img;
-      document.getElementById('detailCategory').textContent = categoryLabels[product.category] || product.category;
       document.getElementById('detailName').innerText = product.name;
       document.getElementById('detailPrice').innerText = `₹${product.price}`;
       document.getElementById('detailIngredients').innerHTML = `🌿 Ingredients: ${product.ingredients || 'Pure Ayurvedic herbs'}`;
       document.getElementById('detailDesc').innerText = product.desc || 'A traditional Ayurvedic formulation for holistic wellness.';
-      document.getElementById('detailQty').innerText = detailQty;
       document.getElementById('productDetailOverlay').classList.remove('hidden');
       document.body.style.overflow = 'hidden';
     }
@@ -1838,359 +784,15 @@
       if (e.target === this) closeDetail();
     });
 
-    document.getElementById('detailMinus').addEventListener('click', function() {
-      if (detailQty > 1) { detailQty--; document.getElementById('detailQty').innerText = detailQty; }
+    function getProductById(id) { return products.find(p => p.id === id); }
+
+    // ---- SEARCH ----
+    document.getElementById('productSearchInput').addEventListener('input', function() {
+      renderProducts(this.value);
     });
-    document.getElementById('detailPlus').addEventListener('click', function() {
-      detailQty++; document.getElementById('detailQty').innerText = detailQty;
-    });
-
-    document.getElementById('detailAddCart').addEventListener('click', function() {
-      if (!detailProductId) return;
-      const product = getProductById(detailProductId);
-      if (!product) return;
-      const existing = cart.find(item => item.id === detailProductId);
-      const newQty = (existing ? existing.qty : 0) + detailQty;
-      updateCart(detailProductId, newQty);
-      renderProducts(currentSearchTerm, currentCategory);
-      renderCart();
-      closeDetail();
-    });
-
-    document.getElementById('detailBuyNow').addEventListener('click', function() {
-      if (!detailProductId) return;
-      const product = getProductById(detailProductId);
-      if (!product) return;
-      const qty = detailQty;
-      const total = product.price * qty;
-      const msg = `Hello,%0AI want to buy%0A%0AProduct: ${product.name}%0AQuantity: ${qty}%0ATotal Price: ₹${total}%0A%0APlease confirm.`;
-      window.open(`https://wa.me/917770975666?text=${msg}`, '_blank');
-      closeDetail();
-    });
-
-    // ============================================
-    // PDF DOWNLOAD - WITH BOTH LOGOS
-    // ============================================
-    document.getElementById('downloadPdfBtn').addEventListener('click', function() {
-      if (!currentDetailProduct) {
-        alert('Please open a product first.');
-        return;
-      }
-
-      const btn = this;
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-      btn.disabled = true;
-
-      const product = currentDetailProduct;
-
-      // Load logo.png (icon)
-      const logoIcon = new Image();
-      logoIcon.crossOrigin = 'anonymous';
-      logoIcon.src = 'logo.png';
-
-      // Load brand-logo.png
-      const brandLogo = new Image();
-      brandLogo.crossOrigin = 'anonymous';
-      brandLogo.src = 'brand-logo.png';
-
-      // Load product image
-      const productImg = new Image();
-      productImg.crossOrigin = 'anonymous';
-      productImg.src = product.img;
-
-      let logoIconLoaded = false;
-      let brandLogoLoaded = false;
-      let productLoaded = false;
-      let logoIconDataUrl = null;
-      let brandLogoDataUrl = null;
-      let productDataUrl = null;
-
-      function checkAllLoaded() {
-        if (logoIconLoaded && brandLogoLoaded && productLoaded) {
-          generatePDF();
-        }
-      }
-
-      logoIcon.onload = function() {
-        const canvas = document.createElement('canvas');
-        canvas.width = logoIcon.width;
-        canvas.height = logoIcon.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(logoIcon, 0, 0);
-        logoIconDataUrl = canvas.toDataURL('image/png', 0.9);
-        logoIconLoaded = true;
-        checkAllLoaded();
-      };
-
-      logoIcon.onerror = function() {
-        logoIconLoaded = true;
-        logoIconDataUrl = null;
-        checkAllLoaded();
-      };
-
-      brandLogo.onload = function() {
-        const canvas = document.createElement('canvas');
-        canvas.width = brandLogo.width;
-        canvas.height = brandLogo.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(brandLogo, 0, 0);
-        brandLogoDataUrl = canvas.toDataURL('image/png', 0.9);
-        brandLogoLoaded = true;
-        checkAllLoaded();
-      };
-
-      brandLogo.onerror = function() {
-        brandLogoLoaded = true;
-        brandLogoDataUrl = null;
-        checkAllLoaded();
-      };
-
-      productImg.onload = function() {
-        const canvas = document.createElement('canvas');
-        canvas.width = productImg.width;
-        canvas.height = productImg.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(productImg, 0, 0);
-        productDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-        productLoaded = true;
-        checkAllLoaded();
-      };
-
-      productImg.onerror = function() {
-        productLoaded = true;
-        productDataUrl = null;
-        checkAllLoaded();
-      };
-
-      // Timeout fallback
-      setTimeout(function() {
-        if (!logoIconLoaded || !brandLogoLoaded || !productLoaded) {
-          logoIconLoaded = true;
-          brandLogoLoaded = true;
-          productLoaded = true;
-          if (!logoIconDataUrl) logoIconDataUrl = null;
-          if (!brandLogoDataUrl) brandLogoDataUrl = null;
-          if (!productDataUrl) productDataUrl = null;
-          checkAllLoaded();
-        }
-      }, 5000);
-
-      function generatePDF() {
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
-
-        const container = document.createElement('div');
-        container.style.cssText = `
-          position: fixed;
-          left: -9999px;
-          top: 0;
-          width: 800px;
-          background: white;
-          padding: 30px;
-          font-family: 'Segoe UI', Arial, sans-serif;
-          z-index: -1;
-        `;
-        
-        // Build header with logo.png first, then brand-logo.png
-        let headerHTML = '';
-        
-        // If both logos available
-        if (logoIconDataUrl || brandLogoDataUrl) {
-          let logoHtml = '';
-          if (logoIconDataUrl) {
-            logoHtml += `<img src="${logoIconDataUrl}" alt="Logo" style="height: 40px; width: auto; margin: 0 5px;">`;
-          }
-          if (brandLogoDataUrl) {
-            logoHtml += `<img src="${brandLogoDataUrl}" alt="Brand Logo" style="height: 40px; width: auto; margin: 0 5px;">`;
-          }
-          
-          headerHTML = `
-            <div style="text-align: center; border-bottom: 3px solid #2E7D32; padding-bottom: 15px; margin-bottom: 20px;">
-              <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                ${logoHtml}
-              </div>
-            </div>
-          `;
-        } else {
-          // Fallback to text
-          headerHTML = `
-            <div style="text-align: center; border-bottom: 3px solid #2E7D32; padding-bottom: 15px; margin-bottom: 20px;">
-              <h1 style="color: #2E7D32; font-size: 28px; margin: 0;">ĀyurVana</h1>
-              <p style="color: #1B5E20; font-size: 14px; margin: 5px 0 0;">Ayurvedic Wellness</p>
-            </div>
-          `;
-        }
-
-        let productImageHTML = '';
-        if (productDataUrl) {
-          productImageHTML = `
-            <div style="text-align: center; margin-bottom: 20px;">
-              <img src="${productDataUrl}" alt="${product.name}" style="max-width: 100%; max-height: 300px; border-radius: 12px; border: 1px solid #e0e0e0;">
-            </div>
-          `;
-        }
-
-        container.innerHTML = `
-          ${headerHTML}
-          
-          ${productImageHTML}
-          
-          <h2 style="color: #2E7D32; font-size: 22px; margin: 10px 0 5px;">${product.name}</h2>
-          <p style="color: #5f6f5a; font-size: 14px; margin: 0 0 5px;"><strong>Category:</strong> ${categoryLabels[product.category] || product.category}</p>
-          <p style="color: #5f6f5a; font-size: 14px; margin: 0 0 10px;"><strong>Botanical Name:</strong> ${product.generic}</p>
-          
-          <div style="background: #e8f5e9; padding: 12px 15px; border-radius: 8px; margin: 10px 0;">
-            <p style="font-size: 20px; font-weight: 700; color: #1B5E20; margin: 0;">Price: ₹${product.price}</p>
-          </div>
-          
-          <div style="margin: 15px 0;">
-            <h3 style="color: #2E7D32; font-size: 16px; margin: 0 0 5px;">Description</h3>
-            <p style="color: #2a3a2a; line-height: 1.6; margin: 0;">${product.desc}</p>
-          </div>
-          
-          <div style="margin: 15px 0;">
-            <h3 style="color: #2E7D32; font-size: 16px; margin: 0 0 5px;">Ingredients</h3>
-            <p style="color: #2a3a2a; line-height: 1.6; margin: 0;">${product.ingredients}</p>
-          </div>
-          
-          <div style="margin: 15px 0;">
-            <h3 style="color: #2E7D32; font-size: 16px; margin: 0 0 5px;">Product Details</h3>
-            <p style="color: #2a3a2a; line-height: 1.6; margin: 0;">
-              <strong>Product ID:</strong> #${String(product.id).padStart(3, '0')}<br>
-              <strong>Category:</strong> ${categoryLabels[product.category] || product.category}<br>
-              <strong>Form:</strong> ${product.name.includes('Capsules') ? 'Capsules' : product.name.includes('Tablet') ? 'Tablets' : product.name.includes('Oil') ? 'Oil' : product.name.includes('Juice') ? 'Juice' : 'Herbal'}<br>
-              <strong>Origin:</strong> India
-            </p>
-          </div>
-          
-          <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #e0e0e0; text-align: center; color: #5f6f5a; font-size: 12px;">
-            <p><strong>ĀyurVana</strong> · Heritage Wellness Since 1989</p>
-            <p>Contact: +91 77709 75666 · ayur@vana.in</p>
-            <p style="color: #999; font-size: 10px;">This document is for informational purposes only.</p>
-          </div>
-        `;
-
-        document.body.appendChild(container);
-
-        html2canvas(container, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          logging: false,
-          backgroundColor: '#ffffff',
-          width: 800,
-          height: container.scrollHeight
-        }).then(function(canvas) {
-          const imgData = canvas.toDataURL('image/jpeg', 0.95);
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF('p', 'mm', 'a4');
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-          
-          pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-          pdf.save(product.name.replace(/\s+/g, '_') + '_Details.pdf');
-          
-          document.body.removeChild(container);
-          btn.innerHTML = originalText;
-          btn.disabled = false;
-        }).catch(function(err) {
-          console.error('PDF Generation Error:', err);
-          document.body.removeChild(container);
-          btn.innerHTML = originalText;
-          btn.disabled = false;
-          alert('Could not generate PDF. Please try again.');
-        });
-      }
-    });
-
-    // ---- BUY ENTIRE CART ----
-    document.getElementById('buyCartWhatsApp').addEventListener('click', function() {
-      if (cart.length === 0) { alert('Cart is empty'); return; }
-      let subtotal = 0;
-      let msg = 'Hello,%0AI want to buy%0A';
-      cart.forEach(item => {
-        const p = getProductById(item.id);
-        if (!p) return;
-        const st = p.price * item.qty;
-        subtotal += st;
-        msg += '%0A' + p.name + '  x' + item.qty + '  = ₹' + st;
-      });
-      const delivery = 40;
-      const gst = subtotal * 0.12;
-      const grand = subtotal + gst + delivery;
-      msg += '%0A%0ASubtotal: ₹' + subtotal.toFixed(2) + '%0AGST (12%): ₹' + gst.toFixed(2) + '%0ADelivery: ₹' + delivery.toFixed(2) + '%0AGrand Total: ₹' + grand.toFixed(2) + '%0A%0APlease confirm.';
-      window.open('https://wa.me/917770975666?text=' + msg, '_blank');
-    });
-
-    // ============================================
-    // INQUIRY POPUP FUNCTIONALITY
-    // ============================================
-    const inquiryBtn = document.getElementById('inquiryBtn');
-    const inquiryModal = document.getElementById('inquiryModal');
-    const closeInquiryModal = document.getElementById('closeInquiryModal');
-
-    // Show/hide product dropdown based on inquiry type
-    document.getElementById('inquiryType').addEventListener('change', function() {
-      const productGroup = document.getElementById('productSelectGroup');
-      if (this.value === 'Product Buying') {
-        productGroup.style.display = 'block';
-      } else {
-        productGroup.style.display = 'none';
-      }
-    });
-
-    inquiryBtn.addEventListener('click', function() {
-      inquiryModal.classList.add('show');
-      document.getElementById('inquiryForm').reset();
-      document.getElementById('productSelectGroup').style.display = 'none';
-    });
-
-    closeInquiryModal.addEventListener('click', function() {
-      inquiryModal.classList.remove('show');
-    });
-
-    inquiryModal.addEventListener('click', function(e) {
-      if (e.target === this) {
-        inquiryModal.classList.remove('show');
-      }
-    });
-
-    window.submitInquiry = function(e) {
-      e.preventDefault();
-      
-      const name = document.getElementById('inquiryName').value.trim();
-      const phone = document.getElementById('inquiryPhone').value.trim();
-      const email = document.getElementById('inquiryEmail').value.trim();
-      const inquiryType = document.getElementById('inquiryType').value;
-      const product = document.getElementById('inquiryProduct').value;
-      const message = document.getElementById('inquiryMessage').value.trim();
-
-      if (!name || !phone || !inquiryType || !message) {
-        alert('Please fill in all required fields.');
-        return;
-      }
-
-      let msg = 'Hello,%0A';
-      msg += 'I have an inquiry.%0A%0A';
-      msg += 'Name: ' + name + '%0A';
-      msg += 'Phone: ' + phone + '%0A';
-      if (email) msg += 'Email: ' + email + '%0A';
-      msg += 'Inquiry Type: ' + inquiryType + '%0A';
-      if (inquiryType === 'Product Buying' && product) {
-        msg += 'Product: ' + product + '%0A';
-      }
-      msg += 'Message: ' + message + '%0A%0A';
-      msg += 'Please get back to me. Thank you!';
-
-      window.open('https://wa.me/917770975666?text=' + msg, '_blank');
-      
-      inquiryModal.classList.remove('show');
-      document.getElementById('inquiryForm').reset();
-      document.getElementById('productSelectGroup').style.display = 'none';
-    };
 
     // ---- NAVIGATION ----
-    const pages = ['home','products','offers','news','mykart'];
+    const pages = ['home','products','offers','news'];
     const navLinks = document.querySelectorAll('.nav-links a');
     const backBtns = document.querySelectorAll('.back-btn');
 
@@ -2206,12 +808,9 @@
         if (link.dataset.page === page) link.classList.add('active');
       });
       if (page === 'products') {
-        renderProducts(currentSearchTerm, currentCategory);
+        renderProducts(document.getElementById('productSearchInput').value);
       }
-      if (page === 'mykart') renderCart();
-      if (page === 'home') {
-        buildCarousel();
-      }
+      if (page === 'home') renderCarousel();
       if (page === 'offers') renderOffers();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -2240,14 +839,9 @@
     });
 
     // ---- INIT ----
-    updateCategoryCounts();
-    renderProducts('', 'all');
-    renderCart();
+    renderProducts('');
     renderOffers();
-    buildCarousel();
     navigateTo('home');
-
-    }); // End of DOMContentLoaded
   </script>
 </body>
 </html>
