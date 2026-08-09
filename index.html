@@ -1197,7 +1197,7 @@
   </div>
 
   <!-- floating WhatsApp -->
-  <a href="https://wa.me/917770975666" target="_blank" class="float-whatsapp"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://wa.me/919893399560" target="_blank" class="float-whatsapp"><i class="fab fa-whatsapp"></i></a>
 
   <!-- product detail overlay -->
   <div id="productDetailOverlay" class="detail-overlay hidden">
@@ -1735,7 +1735,7 @@
             const qty = currentQty > 0 ? currentQty : 1;
             const total = product.price * qty;
             const msg = `Hello,%0AI want to buy%0A%0AProduct: ${product.name}%0AQuantity: ${qty}%0ATotal Price: ₹${total}%0A%0APlease confirm.`;
-            window.open(`https://wa.me/917770975666?text=${msg}`, '_blank');
+            window.open(`https://wa.me/919893399560?text=${msg}`, '_blank');
           }
           renderProducts(currentSearchTerm, currentCategory);
           renderCart();
@@ -1892,12 +1892,12 @@
       const qty = detailQty;
       const total = product.price * qty;
       const msg = `Hello,%0AI want to buy%0A%0AProduct: ${product.name}%0AQuantity: ${qty}%0ATotal Price: ₹${total}%0A%0APlease confirm.`;
-      window.open(`https://wa.me/917770975666?text=${msg}`, '_blank');
+      window.open(`https://wa.me/919893399560?text=${msg}`, '_blank');
       closeDetail();
     });
 
     // ============================================
-    // PDF DOWNLOAD - WITH COMPANY LOGO PNG
+    // PDF DOWNLOAD - WITH BOTH LOGOS (logo.png first, then brand-logo.png)
     // ============================================
     document.getElementById('downloadPdfBtn').addEventListener('click', function() {
       if (!currentDetailProduct) {
@@ -1912,42 +1912,66 @@
 
       const product = currentDetailProduct;
 
-      // Load company logo first
-      const companyLogo = new Image();
-      companyLogo.crossOrigin = 'anonymous';
-      companyLogo.src = 'brand-logo.png';
+      // Load logo.png (icon)
+      const logoIcon = new Image();
+      logoIcon.crossOrigin = 'anonymous';
+      logoIcon.src = 'logo.png';
+
+      // Load brand-logo.png
+      const brandLogo = new Image();
+      brandLogo.crossOrigin = 'anonymous';
+      brandLogo.src = 'brand-logo.png';
 
       // Load product image
       const productImg = new Image();
       productImg.crossOrigin = 'anonymous';
       productImg.src = product.img;
 
-      let logoLoaded = false;
+      let logoIconLoaded = false;
+      let brandLogoLoaded = false;
       let productLoaded = false;
-      let logoDataUrl = null;
+      let logoIconDataUrl = null;
+      let brandLogoDataUrl = null;
       let productDataUrl = null;
 
-      function checkBothLoaded() {
-        if (logoLoaded && productLoaded) {
+      function checkAllLoaded() {
+        if (logoIconLoaded && brandLogoLoaded && productLoaded) {
           generatePDF();
         }
       }
 
-      companyLogo.onload = function() {
+      logoIcon.onload = function() {
         const canvas = document.createElement('canvas');
-        canvas.width = companyLogo.width;
-        canvas.height = companyLogo.height;
+        canvas.width = logoIcon.width;
+        canvas.height = logoIcon.height;
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(companyLogo, 0, 0);
-        logoDataUrl = canvas.toDataURL('image/png', 0.9);
-        logoLoaded = true;
-        checkBothLoaded();
+        ctx.drawImage(logoIcon, 0, 0);
+        logoIconDataUrl = canvas.toDataURL('image/png', 0.9);
+        logoIconLoaded = true;
+        checkAllLoaded();
       };
 
-      companyLogo.onerror = function() {
-        logoLoaded = true;
-        logoDataUrl = null;
-        checkBothLoaded();
+      logoIcon.onerror = function() {
+        logoIconLoaded = true;
+        logoIconDataUrl = null;
+        checkAllLoaded();
+      };
+
+      brandLogo.onload = function() {
+        const canvas = document.createElement('canvas');
+        canvas.width = brandLogo.width;
+        canvas.height = brandLogo.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(brandLogo, 0, 0);
+        brandLogoDataUrl = canvas.toDataURL('image/png', 0.9);
+        brandLogoLoaded = true;
+        checkAllLoaded();
+      };
+
+      brandLogo.onerror = function() {
+        brandLogoLoaded = true;
+        brandLogoDataUrl = null;
+        checkAllLoaded();
       };
 
       productImg.onload = function() {
@@ -1958,23 +1982,25 @@
         ctx.drawImage(productImg, 0, 0);
         productDataUrl = canvas.toDataURL('image/jpeg', 0.9);
         productLoaded = true;
-        checkBothLoaded();
+        checkAllLoaded();
       };
 
       productImg.onerror = function() {
         productLoaded = true;
         productDataUrl = null;
-        checkBothLoaded();
+        checkAllLoaded();
       };
 
       // Timeout fallback
       setTimeout(function() {
-        if (!logoLoaded || !productLoaded) {
-          logoLoaded = true;
+        if (!logoIconLoaded || !brandLogoLoaded || !productLoaded) {
+          logoIconLoaded = true;
+          brandLogoLoaded = true;
           productLoaded = true;
-          if (!logoDataUrl) logoDataUrl = null;
+          if (!logoIconDataUrl) logoIconDataUrl = null;
+          if (!brandLogoDataUrl) brandLogoDataUrl = null;
           if (!productDataUrl) productDataUrl = null;
-          checkBothLoaded();
+          checkAllLoaded();
         }
       }, 5000);
 
@@ -1993,15 +2019,28 @@
           z-index: -1;
         `;
         
-        // Build HTML with company logo at top
+        // Build header with logo.png first, then brand-logo.png
         let headerHTML = '';
-        if (logoDataUrl) {
+        
+        // If both logos available
+        if (logoIconDataUrl || brandLogoDataUrl) {
+          let logoHtml = '';
+          if (logoIconDataUrl) {
+            logoHtml += `<img src="${logoIconDataUrl}" alt="Logo" style="height: 40px; width: auto; margin: 0 5px;">`;
+          }
+          if (brandLogoDataUrl) {
+            logoHtml += `<img src="${brandLogoDataUrl}" alt="Brand Logo" style="height: 40px; width: auto; margin: 0 5px;">`;
+          }
+          
           headerHTML = `
             <div style="text-align: center; border-bottom: 3px solid #2E7D32; padding-bottom: 15px; margin-bottom: 20px;">
-              <img src="${logoDataUrl}" alt="Company Logo" style="max-height: 60px; width: auto; margin-bottom: 5px;">
+              <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                ${logoHtml}
+              </div>
             </div>
           `;
         } else {
+          // Fallback to text
           headerHTML = `
             <div style="text-align: center; border-bottom: 3px solid #2E7D32; padding-bottom: 15px; margin-bottom: 20px;">
               <h1 style="color: #2E7D32; font-size: 28px; margin: 0;">ĀyurVana</h1>
@@ -2108,7 +2147,7 @@
       const gst = subtotal * 0.12;
       const grand = subtotal + gst + delivery;
       msg += '%0A%0ASubtotal: ₹' + subtotal.toFixed(2) + '%0AGST (12%): ₹' + gst.toFixed(2) + '%0ADelivery: ₹' + delivery.toFixed(2) + '%0AGrand Total: ₹' + grand.toFixed(2) + '%0A%0APlease confirm.';
-      window.open('https://wa.me/917770975666?text=' + msg, '_blank');
+      window.open('https://wa.me/919893399560?text=' + msg, '_blank');
     });
 
     // ============================================
@@ -2130,7 +2169,6 @@
 
     inquiryBtn.addEventListener('click', function() {
       inquiryModal.classList.add('show');
-      // Reset form
       document.getElementById('inquiryForm').reset();
       document.getElementById('productSelectGroup').style.display = 'none';
     });
@@ -2160,7 +2198,6 @@
         return;
       }
 
-      // Build WhatsApp message
       let msg = 'Hello,%0A';
       msg += 'I have an inquiry.%0A%0A';
       msg += 'Name: ' + name + '%0A';
@@ -2173,7 +2210,7 @@
       msg += 'Message: ' + message + '%0A%0A';
       msg += 'Please get back to me. Thank you!';
 
-      window.open('https://wa.me/917770975666?text=' + msg, '_blank');
+      window.open('https://wa.me/919893399560?text=' + msg, '_blank');
       
       inquiryModal.classList.remove('show');
       document.getElementById('inquiryForm').reset();
